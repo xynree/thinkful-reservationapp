@@ -4,7 +4,8 @@ const timeFormat = /\d\d:\d\d/;
 /**
  * Formats a Date object as YYYY-MM-DD.
  *
- * This function is *not* exported because the UI should generally avoid working directly with Date instance.
+ * This function is *not* exported because the UI
+ * should generally avoid working directly with Date instance.
  * You may export this function if you need it.
  *
  * @param date
@@ -15,11 +16,12 @@ const timeFormat = /\d\d:\d\d/;
 function asDateString(date) {
   return `${date.getFullYear().toString(10)}-${(date.getMonth() + 1)
     .toString(10)
-    .padStart(2, "0")}-${date.getDate().toString(10).padStart(2, "0")}`;
+    .padStart(2, '0')}-${date.getDate().toString(10).padStart(2, '0')}`;
 }
 
 /**
- * Format a date string in ISO-8601 format (which is what is returned from PostgreSQL) as YYYY-MM-DD.
+ * Format a date string in ISO-8601 format
+ * (which is what is returned from PostgreSQL) as YYYY-MM-DD.
  * @param dateString
  *  ISO-8601 date string
  * @returns {*}
@@ -57,7 +59,7 @@ export function today() {
  *  the date one day prior to currentDate, formatted as YYYY-MM-DD
  */
 export function previous(currentDate) {
-  let [ year, month, day ] = currentDate.split("-");
+  let [year, month, day] = currentDate.split('-');
   month -= 1;
   const date = new Date(year, month, day);
   date.setMonth(date.getMonth());
@@ -73,7 +75,8 @@ export function previous(currentDate) {
  *  the date one day after currentDate, formatted as YYYY-MM-DD
  */
 export function next(currentDate) {
-  let [ year, month, day ] = currentDate.split("-");
+  // eslint-disable-next-line prefer-const
+  let [year, month, day] = currentDate.split('-');
   month -= 1;
   const date = new Date(year, month, day);
   date.setMonth(date.getMonth());

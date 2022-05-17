@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 /**
  * Defines the menu for this application.
@@ -52,7 +52,9 @@ function Menu() {
             className="btn rounded-circle border-0"
             id="sidebarToggle"
             type="button"
-          />
+          >
+            Button
+          </button>
         </div>
       </div>
     </nav>
