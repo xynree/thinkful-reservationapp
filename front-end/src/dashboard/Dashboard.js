@@ -20,6 +20,7 @@ function Dashboard({ date }) {
       .catch(setReservationsError);
     return () => abortController.abort();
   }
+  console.log(date)
 
   useEffect(loadDashboard, [date]);
 

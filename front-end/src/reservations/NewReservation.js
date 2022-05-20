@@ -12,7 +12,7 @@ function NewReservation() {
   return (
     <div className="card w-75 mt-3 ">
       <div className="card-body d-flex flex-column">
-        <h1 className="card-title">New Reservation</h1>
+        <h1 className="card-title display-3">New Reservation</h1>
         <form onSubmit={saveReservation}>
           {reservationFormData.map((field) => (
             <FormField key={field.input.id} {...field} />

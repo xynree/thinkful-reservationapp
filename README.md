@@ -61,7 +61,7 @@ The table below describes the existing files in the `./front-end` folder:
 | `./front-end/src/dashboard/Dashboard.js`           | Defines the Dashboard page.                                                                            |
 | `./front-end/src/index.js`                         | The main entry point for the React application.                                                        |
 | `./front-end/src/layout/ErrorAlert.js`             | Defines an error alert component that display only when an error is specified.                         |
-| `./front-end/src/layout/Layout.css`                | The css for the Layout component.                                                                      |
+                                                            |
 | `./front-end/src/layout/Layout.js`                 | Defines the main layout of the application.                                                            |
 | `./front-end/src/layout/Menu.js`                   | Defines the menu for the application.                                                                  |
 | `./front-end/src/layout/NotFound.js`               | Defines the "Not found" component that is displayed when no route matches.                             |
