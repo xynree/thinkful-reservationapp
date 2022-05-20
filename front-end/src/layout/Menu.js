@@ -1,24 +1,23 @@
 import React, { useState } from "react";
-
 import { Link } from "react-router-dom";
 import SidebarToggle from "./SidebarToggle";
 
 const { menu, headline, iconStyle, navItem } = {
-  menu: "navbar navbar-dark col-sm-3 h-100 bg-secondary shadow-sm flex-column align-items-start p-0",
+  menu: "navbar navbar-dark col-sm-3 h-100 bg-primary shadow-sm flex-column align-items-start p-0",
   flexContainer: "container-fluid p-3",
   headline: {
-    link: "d-flex flex-nowrap justify-content-between text-decoration-none align-items-center w-100 p-2 ps-3 pb-3 border-bottom border-1 border-opacity-25  border-white ",
-    title: "w-75 text-left text-nowrap text-white fs-5 fw-bold",
+    link: "d-flex flex-nowrap justify-content-between text-decoration-none align-items-center w-100 p-3 ps-4 border-bottom border-1 border-opacity-50 border-white ",
+    title: "w-75 text-left text-nowrap fs-5 fw-bold text-white",
     icon: "navbar-brand bi bi-table",
     style: {
-      fontSize: '30px',
-      color: 'black'
-  }
+      fontSize: "24px",
+    },
   },
-  iconStyle: { fontSize: "24px" },
+  iconStyle: { fontSize: "20px" },
   navItem: {
-    flexContainer: "nav navbar-nav text-light w-100 d-flex flex-column",
-    childContainer: "nav-item p-2 ps-3 border-bottom border-1 border-opacity-25 border-white w-100",
+    flexContainer: "nav navbar-nav text-dark w-100 d-flex flex-column",
+    childContainer:
+      "nav-item p-2 ps-4 border-bottom border-1 border-opacity-50 border-white w-100",
     link: "nav-link d-flex justify-content-between align-items-center",
     title: "w-75 text-left ps-1 text-nowrap",
   },
@@ -33,15 +32,20 @@ const linkList = [
 
 function Menu() {
   const [open, toggleOpen] = useState(true);
+  console.log(open);
 
   return (
     <nav
       className={menu}
-      style={{ transition: "all 0.5s", width: open? '15.2rem':'4rem' }}
+      style={{ transition: "all 0.5s", width: open ? "14.5rem" : "4.5rem" }}
     >
       <Link to="/" className={headline.link}>
-        <span className={headline.icon} style={headline.style} />
-        {open && <span className={headline.title}>Periodic Tables</span>}
+        <span className={headline.icon} />
+        {open && (
+          <span className={headline.title} style={headline.style}>
+            Periodic Tables
+          </span>
+        )}
       </Link>
       <ul className={navItem.flexContainer}>
         {linkList.map(({ icon, title, to }) => (
@@ -49,7 +53,7 @@ function Menu() {
             <Link className={navItem.link} to={`/${to}`}>
               <span className={`bi bi-${icon}`} style={iconStyle} />
               {open && (
-                <span className={navItem.title}>{`${"  "}${title}`}</span>
+                <span className={navItem.title}>{`${"  "}${title}`} </span>
               )}
             </Link>
           </li>

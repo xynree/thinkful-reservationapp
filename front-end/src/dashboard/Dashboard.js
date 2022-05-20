@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { listReservations } from '../utils/api';
 import ErrorAlert from '../layout/ErrorAlert';
+import useQuery from '../utils/useQuery';
+import ResCard from './ResCard';
 
 /**
  * Defines the dashboard page.
@@ -20,7 +22,9 @@ function Dashboard({ date }) {
       .catch(setReservationsError);
     return () => abortController.abort();
   }
-  console.log(date)
+
+  const query = useQuery().get("date")
+  console.log("date:", date, "query:", query, reservations)
 
   useEffect(loadDashboard, [date]);
 
@@ -28,10 +32,11 @@ function Dashboard({ date }) {
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date</h4>
+        <h4 className="mb-0">Reservations for date {date}</h4>
       </div>
       <ErrorAlert error={reservationsError} />
-      {JSON.stringify(reservations)}
+
+      {reservations?.map((res) => <ResCard key={res.created_at} res={res}/>) }
     </main>
   );
 }
