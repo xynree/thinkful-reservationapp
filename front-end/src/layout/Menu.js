@@ -32,7 +32,6 @@ const linkList = [
 
 function Menu() {
   const [open, toggleOpen] = useState(true);
-  console.log(open);
 
   return (
     <nav

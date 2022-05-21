@@ -6,10 +6,10 @@ const asyncErr = require('../errors/asyncErrBoundary')
  * List handler for reservation resources
  */
 async function list(req, res) {
-  if (req.query.date) {
-    const data = await service.read(req.query.date)
-    return res.json({data})
-  } else next({status: 404, message: `Date is not found.`});
+  if (!req.query.date) return next({status: 400, message: `Date is not found.`});
+ 
+  const data = await service.read(req.query.date)
+  return res.json({data})
 }
 
 async function post(req,res) {
