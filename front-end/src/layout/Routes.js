@@ -26,7 +26,7 @@ function Routes() {
         <NewReservation />
       </Route>
       <Route path="/dashboard">
-        <Dashboard date={today()} />
+        <Dashboard dateToday={today()} />
       </Route>
       <Route>
         <NotFound />
