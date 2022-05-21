@@ -1,14 +1,16 @@
+const service = require('./reservations.service')
+
+
 /**
  * List handler for reservation resources
  */
 async function list(req, res) {
-  res.json({
-    data: [],
-  });
+  const data = await service.read(req.query.date)
+  return res.json({data})
 }
 
 async function post(req,res) {
-  console.log(req.body.data)
+  console.log(req.searchParams)
 }
 
 module.exports = {

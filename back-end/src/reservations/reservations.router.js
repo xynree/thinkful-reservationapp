@@ -1,3 +1,5 @@
+const notFound = require('../errors/notFound')
+
 /**
  * Defines the router for reservation resources.
  *
@@ -7,6 +9,6 @@
 const router = require("express").Router();
 const {list, post} = require("./reservations.controller");
 
-router.route("/").get(list).post(post);
+router.route("/").get(list).post(post).all(notFound);
 
 module.exports = router;

@@ -14,37 +14,30 @@ import NoRes from './NoRes';
 function Dashboard({ dateToday }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
-  const [resDate, setResDate]  = useState(dateToday)
   const query = useQuery().get("date")
-
+  const [date, ]  = useState(query? query:dateToday)
 
   const loadDashboard = () => {
     const abortController = new AbortController();
     setReservationsError(null);
-    listReservations({ date: dateToday }, abortController.signal)
+    listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
     return () => abortController.abort();
   }
 
-  const setReservationDate = () => {
-    if (query) setResDate(query);
-    else if (dateToday) setResDate(dateToday);
-  }
-
-  
-  useEffect(setReservationDate,[dateToday, query])
-  useEffect(loadDashboard, [dateToday, query, resDate]);
+  useEffect(loadDashboard, [dateToday, query, date]);
+  console.log(reservations)
 
   return (
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date {resDate}</h4>
+        <h4 className="mb-0">Reservations for date {date}</h4>
       </div>
       <ErrorAlert error={reservationsError} />
 
-      {reservations.length? reservations.map((res) => <ResCard key={res.created_at} res={res}/>) : <NoRes/> }
+      {reservations?.length? reservations.map((res) => <ResCard key={res.created_at} res={res}/>) : <NoRes/> }
     </main>
   );
 }
