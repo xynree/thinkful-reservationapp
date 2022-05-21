@@ -13,7 +13,7 @@ import Routes from './Routes';
 const {outerContainer, flexContainer, routes} = { 
   outerContainer: "container-fluid h-100",
   flexContainer: "row h-100",
-  routes: 'col'
+  routes: 'col h-100 p-0'
 }
 
 

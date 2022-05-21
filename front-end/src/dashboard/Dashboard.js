@@ -53,11 +53,9 @@ function Dashboard({ dateToday }) {
   ];
 
   return (
-    <main>
-      <h1>Dashboard</h1>
-      <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for {date}</h4>
-      </div>
+    <main className='h-100 overflow-auto p-4 '>
+      <h1 className='display-4'>Dashboard</h1>
+        <p className="mb-0">Reservations for {date}</p>
       <ErrorAlert error={reservationsError} />
       <BtnGroup buttons={buttons} />
 

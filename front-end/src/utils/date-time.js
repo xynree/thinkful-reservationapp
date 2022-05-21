@@ -75,7 +75,6 @@ export function previous(currentDate) {
  *  the date one day after currentDate, formatted as YYYY-MM-DD
  */
 export function next(currentDate) {
-  // eslint-disable-next-line prefer-const
   let [year, month, day] = currentDate.split('-');
   month -= 1;
   const date = new Date(year, month, day);
