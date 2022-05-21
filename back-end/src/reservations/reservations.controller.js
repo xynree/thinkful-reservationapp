@@ -1,12 +1,15 @@
 const service = require('./reservations.service')
+const asyncErr = require('../errors/asyncErrBoundary')
 
 
 /**
  * List handler for reservation resources
  */
 async function list(req, res) {
-  const data = await service.read(req.query.date)
-  return res.json({data})
+  if (req.query.date) {
+    const data = await service.read(req.query.date)
+    return res.json({data})
+  } else next({status: 404, message: `Date is not found.`});
 }
 
 async function post(req,res) {
@@ -14,6 +17,6 @@ async function post(req,res) {
 }
 
 module.exports = {
-  list,
-  post
+  list: asyncErr(list),
+  post: asyncErr(post)
 };

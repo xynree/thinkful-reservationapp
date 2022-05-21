@@ -4,18 +4,25 @@ import ErrorAlert from '../layout/ErrorAlert';
 import useQuery from '../utils/useQuery';
 import ResCard from './ResCard';
 import NoRes from './NoRes';
+import formatReservationTime from '../utils/format-reservation-time'
+import BtnGroup from '../helpers/BtnGroup';
+import { previous, next, today} from '../utils/date-time'
+
 
 /**
  * Defines the dashboard page.
  * @param date
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
- */
+*/
+
+const formatRes = (res) => formatReservationTime(res).sort((prev,curr)=> prev.reservation_time < curr.reservation_time? -1:1)
+
 function Dashboard({ dateToday }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
   const query = useQuery().get("date")
-  const [date, ]  = useState(query? query:dateToday)
+  const [date, setDate]  = useState(query? query:dateToday)
 
   const loadDashboard = () => {
     const abortController = new AbortController();
@@ -27,7 +34,23 @@ function Dashboard({ dateToday }) {
   }
 
   useEffect(loadDashboard, [dateToday, query, date]);
-  console.log(reservations)
+
+  const buttons=[
+    {
+    title: "Previous",
+    action: () => setDate((date) => previous(date))
+    }, 
+    {
+    title: "Today",
+    action: () => setDate(today())
+    }, 
+    {
+      title: "Next",
+      action: () => setDate(next(date))
+    }
+  ]
+
+
 
   return (
     <main>
@@ -36,8 +59,10 @@ function Dashboard({ dateToday }) {
         <h4 className="mb-0">Reservations for date {date}</h4>
       </div>
       <ErrorAlert error={reservationsError} />
+      <BtnGroup buttons={buttons}/>
 
-      {reservations?.length? reservations.map((res) => <ResCard key={res.created_at} res={res}/>) : <NoRes/> }
+      {reservations?.length? formatRes(reservations).map((res) => <ResCard key={res.mobile_number} res={res}/>) : <NoRes/> }
+
     </main>
   );
 }
