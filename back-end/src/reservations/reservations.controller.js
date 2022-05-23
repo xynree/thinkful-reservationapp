@@ -12,8 +12,11 @@ async function list(req, res, next) {
   return res.json({data})
 }
 
-async function post(req,res) {
-  console.log(req.searchParams)
+async function post(req, res, next) {
+  if (!req.query.date) return next({status: 400, message: `Date is not found.`});
+ 
+  const data = await service.read(req.query.date)
+  return res.json({data})
 }
 
 module.exports = {

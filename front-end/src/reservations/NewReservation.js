@@ -1,10 +1,16 @@
 import FormField from "../helpers/FormField";
 import reservationFormData from "../data/ReservationFormData";
+import { useHistory } from 'react-router-dom';
 
 function NewReservation() {
-  const saveReservation = () => {};
+  const history = useHistory()
+  const saveReservation = () => {
+    return null;
+  };
 
-  const goBack = () => {};
+  const goBack = () => {
+    history.goBack();
+  };
 
   return (
     <div className="h-100 overflow-auto">
