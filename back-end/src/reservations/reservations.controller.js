@@ -25,7 +25,7 @@ const valRes = (req, res, next) => {
     return next({ status: 400, message: "reservation_time field is invalid." });
   if (!dateFormat.test(data.reservation_date))
     return next({ status: 400, message: "reservation_date field is invalid." });
-  if (!parseInt(data["people"]) || typeof data["people"] !== "number")
+  if (!parseInt(data.people) || typeof data.people !== "number")
     return next({ status: 400, message: "people field must be a number." });
 
   return next();

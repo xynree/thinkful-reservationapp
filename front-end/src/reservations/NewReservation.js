@@ -1,16 +1,16 @@
 import FormField from "../helpers/FormField";
 import reservationFormData from "../data/ReservationFormData";
-import { saveReservation } from '../utils/api'
-import { useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { saveReservation } from "../utils/api"
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 const defaultRes = {
-  "first_name": '',
-  'last_name': '',
-  'mobile_number': '',
-  'reservation_date': '',
-  'reservation_time': '',
-  'people': '',
+  "first_name": "",
+  "last_name": "",
+  "mobile_number": "",
+  "reservation_date": "",
+  "reservation_time": "",
+  "people": 0,
 }
 
 function NewReservation() {
@@ -20,19 +20,14 @@ function NewReservation() {
   const saveRes =(e)=> {
     e.preventDefault();
     const abort = new AbortController();
-    let form = new FormData();
-    for (let field in newRes) {
-      form.append(field, newRes[field])
-    }
-
-    saveReservation(form, abort.signal)
-      .then(console.log)
+    saveReservation(newRes, abort.signal)
+      .then((res) => history.push(`/dashboard?date=${res.reservation_date}`))
       .catch(console.log)
-
   };
 
   const updateRes = (e) => {
-    setNewRes((newRes) => ({...newRes, [e.target.name]: e.target.value}))
+    if (e.target.name === "people") setNewRes((newRes) => ({...newRes, [e.target.name]: parseInt(e.target.value)}));
+    else setNewRes((newRes) => ({...newRes, [e.target.name]: e.target.value}));
   }
 
   const goBack = () => history.goBack();

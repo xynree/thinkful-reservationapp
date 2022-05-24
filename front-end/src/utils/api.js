@@ -17,8 +17,6 @@ headers.append("Content-Type", "application/json");
 /**
  * Fetch `json` from the specified URL and handle error status codes and ignore `AbortError`s
  *
- * This function is NOT exported because it is not needed outside of this file.
- *
  * @param url
  *  the url for the requst.
  * @param options
@@ -32,13 +30,10 @@ headers.append("Content-Type", "application/json");
 async function fetchJson(url, options, onCancel) {
   try {
     const response = await fetch(url, options);
-
     if (response.status === 204) {
       return null;
     }
-
     const payload = await response.json();
-
     if (payload.error) {
       return Promise.reject({ message: payload.error });
     }
@@ -70,5 +65,6 @@ export async function listReservations(params, signal) {
 
 export async function saveReservation(body, signal) {
   const url = new URL(`${API_BASE_URL}/reservations`);
-  return await fetchJson(url, { method: 'POST', body:JSON.stringify({data: (Object.fromEntries(body))}) , headers, signal},[])
+  const data = JSON.stringify({data: body})
+  return await fetchJson(url, { method: "POST", body: data , headers, signal},[])
 }
