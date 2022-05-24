@@ -61,7 +61,7 @@ The table below describes the existing files in the `./front-end` folder:
 | `./front-end/src/dashboard/Dashboard.js`           | Defines the Dashboard page.                                                                            |
 | `./front-end/src/index.js`                         | The main entry point for the React application.                                                        |
 | `./front-end/src/layout/ErrorAlert.js`             | Defines an error alert component that display only when an error is specified.                         |
-| `./front-end/src/layout/Layout.css`                | The css for the Layout component.                                                                      |
+                                                            |
 | `./front-end/src/layout/Layout.js`                 | Defines the main layout of the application.                                                            |
 | `./front-end/src/layout/Menu.js`                   | Defines the menu for the application.                                                                  |
 | `./front-end/src/layout/NotFound.js`               | Defines the "Not found" component that is displayed when no route matches.                             |
@@ -171,11 +171,11 @@ so that I know how many customers will arrive at the restaurant on a given day.
    - display a `Submit` button that, when clicked, saves the new reservation, then displays the `/dashboard` page for the date of the new reservation
    - display a `Cancel` button that, when clicked, returns the user to the previous page
    - display any error messages returned from the API
-1. The `/dashboard` page will
+2. The `/dashboard` page will
    - list all reservations for one date only. (E.g. if the URL is `/dashboard?date=2035-12-30` then send a GET to `/reservations?date=2035-12-30` to list the reservations for that date). The date is defaulted to today, and the reservations are sorted by time.
    - display next, previous, and today buttons that allow the user to see reservations on other dates
    - display any error messages returned from the API
-1. The `/reservations` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
+3. The `/reservations` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
    - seed the reservations table with the data contained in `./back-end/src/db/seeds/00-reservations.json`
 
 > **Hint** Dates and times in JavaScript and databases can be challenging.

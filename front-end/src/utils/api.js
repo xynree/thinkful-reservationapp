@@ -2,8 +2,8 @@
  * Defines the base URL for the API.
  * The default values is overridden by the `API_BASE_URL` environment variable.
  */
-import formatReservationDate from "./format-reservation-date";
-import formatReservationTime from "./format-reservation-date";
+import formatReservationDate from './format-reservation-date';
+import formatReservationTime from './format-reservation-date';
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
@@ -16,8 +16,6 @@ headers.append("Content-Type", "application/json");
 
 /**
  * Fetch `json` from the specified URL and handle error status codes and ignore `AbortError`s
- *
- * This function is NOT exported because it is not needed outside of this file.
  *
  * @param url
  *  the url for the requst.
@@ -32,13 +30,10 @@ headers.append("Content-Type", "application/json");
 async function fetchJson(url, options, onCancel) {
   try {
     const response = await fetch(url, options);
-
     if (response.status === 204) {
       return null;
     }
-
     const payload = await response.json();
-
     if (payload.error) {
       return Promise.reject({ message: payload.error });
     }
@@ -63,7 +58,13 @@ export async function listReservations(params, signal) {
   Object.entries(params).forEach(([key, value]) =>
     url.searchParams.append(key, value.toString())
   );
-  return await fetchJson(url, { headers, signal }, [])
+  return await fetchJson(url, { method: 'GET', headers, signal}, [])
     .then(formatReservationDate)
     .then(formatReservationTime);
+}
+
+export async function saveReservation(body, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations`);
+  const data = JSON.stringify({data: body})
+  return await fetchJson(url, { method: "POST", body: data , headers, signal},[])
 }

@@ -1,8 +1,6 @@
-import React from "react";
-import Menu from "./Menu";
-import Routes from "./Routes";
-
-import "./Layout.css";
+import React from 'react';
+import Menu from './Menu/Menu'
+import Routes from './Routes';
 
 /**
  * Defines the main layout of the application.
@@ -10,15 +8,21 @@ import "./Layout.css";
  * You will not need to make changes to this file.
  *
  * @returns {JSX.Element}
- */
+*/
+
+const {outerContainer, flexContainer, routes} = { 
+  outerContainer: "container-fluid h-100",
+  flexContainer: "row h-100",
+  routes: 'col h-100 p-0'
+}
+
+
 function Layout() {
   return (
-    <div className="container-fluid">
-      <div className="row h-100">
-        <div className="col-md-2 side-bar">
+    <div className={outerContainer}>
+      <div className={flexContainer}>
           <Menu />
-        </div>
-        <div className="col">
+        <div className={routes}>
           <Routes />
         </div>
       </div>
