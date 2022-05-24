@@ -70,9 +70,5 @@ export async function listReservations(params, signal) {
 
 export async function saveReservation(body, signal) {
   const url = new URL(`${API_BASE_URL}/reservations`);
-
-  return await fetchJson(url, { method: 'POST',headers, signal }, [])
-  .then(formatReservationDate)
-  .then(formatReservationTime);
-
+  return await fetchJson(url, { method: 'POST', body:JSON.stringify({data: (Object.fromEntries(body))}) , headers, signal},[])
 }
