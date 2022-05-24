@@ -17,7 +17,7 @@ function NewReservation() {
   const [newRes, setNewRes] = useState(defaultRes)
   const history = useHistory()
 
-  const saveRes =(e)=> {
+  const saveNewRes =(e)=> {
     e.preventDefault();
     const abort = new AbortController();
     saveReservation(newRes, abort.signal)
@@ -37,11 +37,10 @@ function NewReservation() {
       <div className="card w-75 m-4 ">
         <div className="card-body d-flex flex-column">
           <h1 className="card-title display-3">New Reservation</h1>
-          <form onSubmit={saveRes}>
+          <form onSubmit={saveNewRes}>
             {reservationFormData.map((field) => (
               <FormField key={field.input.id} onChange={updateRes} {...field}  />
             ))}
-
             <div className="d-flex">
               <button type="submit" className="btn btn-primary m-1">
                 <span className="bi bi-send" /> Submit

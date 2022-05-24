@@ -8,8 +8,7 @@ const SidebarToggle = ({open,toggleOpen}) => {
         fontSize: '36px',
         color: open?  'white':'lightgrey',
         zIndex: 1,
-      }}
-      
+      }} 
       id="sidebarToggle"
       type="button"
     ></i>
