@@ -19,6 +19,13 @@ function asDateString(date) {
     .padStart(2, '0')}-${date.getDate().toString(10).padStart(2, '0')}`;
 }
 
+export function isAfterToday(date) {
+  const today = new Date();
+  const checkDate = new Date(date);
+
+  return today < checkDate;
+}
+
 /**
  * Format a date string in ISO-8601 format
  * (which is what is returned from PostgreSQL) as YYYY-MM-DD.

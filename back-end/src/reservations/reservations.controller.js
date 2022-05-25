@@ -3,6 +3,17 @@ const asyncErr = require("../errors/asyncErrBoundary");
 const dateFormat = /\d\d\d\d-\d\d-\d\d/;
 const timeFormat = /\d\d:\d\d/;
 
+/** Validates Date */
+const valDate = (req,res,next) => {
+  const today = new Date();
+  const checkDate = new Date(req.body.data.reservation_date);
+
+  if (today > checkDate) return next({ status: 400, message: `Reservation date must be in the future.` });
+
+  return next();
+}
+
+
 /** Validates Reservation before POST */
 const valRes = (req, res, next) => {
   const data = req.body.data;
@@ -48,5 +59,5 @@ async function post(req, res, next) {
 
 module.exports = {
   list: asyncErr(list),
-  post: [valRes, asyncErr(post)],
+  post: [valDate, valRes, asyncErr(post)],
 };

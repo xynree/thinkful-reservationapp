@@ -3,6 +3,9 @@ import reservationFormData from "../data/ReservationFormData";
 import { saveReservation } from "../utils/api"
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
+import ErrorAlert from "../layout/ErrorAlert";
+import { isAfterToday } from '../utils/date-time';
+
 
 const defaultRes = {
   "first_name": "",
@@ -15,10 +18,15 @@ const defaultRes = {
 
 function NewReservation() {
   const [newRes, setNewRes] = useState(defaultRes)
+  const [err, setErr] = useState(null)
   const history = useHistory()
 
   const saveNewRes =(e)=> {
     e.preventDefault();
+    if (!isAfterToday(newRes.reservation_date)) {
+      setErr('Only future reservations are allowed.')
+      return;
+    }
     const abort = new AbortController();
     saveReservation(newRes, abort.signal)
       .then((res) => history.push(`/dashboard?date=${res.reservation_date}`))
@@ -26,6 +34,7 @@ function NewReservation() {
   };
 
   const updateRes = (e) => {
+    if (err) setErr(null);
     if (e.target.name === "people") setNewRes((newRes) => ({...newRes, [e.target.name]: parseInt(e.target.value)}));
     else setNewRes((newRes) => ({...newRes, [e.target.name]: e.target.value}));
   }
@@ -57,6 +66,7 @@ function NewReservation() {
           </form>
         </div>
       </div>
+      <ErrorAlert error={err} />
     </div>
   );
 }
