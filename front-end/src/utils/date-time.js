@@ -19,19 +19,36 @@ function asDateString(date) {
     .padStart(2, '0')}-${date.getDate().toString(10).padStart(2, '0')}`;
 }
 
+/* Checks if a date is in the future (after today)*/
 export function isAfterToday(date) {
   const today = new Date();
   const checkDate = new Date(date);
-
   return today < checkDate;
 }
 
+/* Gets day of the week */
 export function getDay(date) {
   const checkDate = new Date(date);
   return checkDate.getDay()
 }
 
+/* Gets Time with Hours */
+export function isBetweenTimes(time, open, close) {
+  const [hours, mins] = time.split(":")
+  const currentTime = new Date();
+  currentTime.setHours(hours);
+  currentTime.setMinutes(mins);
 
+  const startTime = new Date();
+  startTime.setHours(open.hr)
+  startTime.setMinutes(open.min)
+
+  const endTime = new Date();
+  endTime.setHours(close.hr)
+  endTime.setMinutes(close.min)
+
+  return ((currentTime > startTime) && (currentTime < endTime))
+}
 
 /**
  * Format a date string in ISO-8601 format

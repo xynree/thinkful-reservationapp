@@ -3,13 +3,15 @@ const asyncErr = require("../errors/asyncErrBoundary");
 const dateFormat = /\d\d\d\d-\d\d-\d\d/;
 const timeFormat = /\d\d:\d\d/;
 
+const CLOSEDDOW = 1
+
 /** Validates Date */
 const valDate = (req,res,next) => {
   const today = new Date();
   const checkDate = new Date(req.body.data.reservation_date);
 
   if (today > checkDate) return next({ status: 400, message: `Reservation date must be in the future.` });
-  if (checkDate.getDay() === 1) return next({ status: 400, message: `Restaurant is closed on Tuesdays.` });
+  if (checkDate.getDay() === CLOSEDDOW) return next({ status: 400, message: `Restaurant is closed on Tuesdays.` });
 
   return next();
 }

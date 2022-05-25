@@ -4,7 +4,8 @@ import { saveReservation } from "../utils/api"
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import ErrorAlert from "../layout/ErrorAlert";
-import { isAfterToday, getDay } from '../utils/date-time';
+import { isAfterToday, getDay, isBetweenTimes } from '../utils/date-time';
+import { CLOSED_DOW, OPENTIME, CLOSEDTIME } from '../data/RestaurantData'
 
 
 const defaultRes = {
@@ -26,8 +27,13 @@ function NewReservation() {
       setErr(err => [...err,{ type: 'PastDateErr',message: 'Only future reservations are allowed.' }])
       return false;
     }
-    if (getDay(newRes.reservation_date) === 1) {
+    if (getDay(newRes.reservation_date) === CLOSED_DOW) {
       setErr(err => [...err, { type: 'ResClosedError', message: 'Restaurant is closed on Tuesdays.' }])
+      return false;
+    }
+
+    if (!isBetweenTimes(newRes.reservation_time, OPENTIME, CLOSEDTIME)) {
+      setErr(err => [...err, { type: 'ResHoursError', message: `Restaurant is only open for booking between ${OPENTIME.hr}:${OPENTIME.min} AM and ${CLOSEDTIME.hr-12}:${CLOSEDTIME.min} PM. `}]);
       return false;
     }
     return true;
