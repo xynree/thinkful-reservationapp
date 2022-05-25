@@ -23,11 +23,11 @@ function NewReservation() {
 
   const valRes = () => {
     if (!isAfterToday(newRes.reservation_date)) {
-      setErr(err => [...err,{ message: 'Only future reservations are allowed.' }])
+      setErr(err => [...err,{ type: 'PastDateErr',message: 'Only future reservations are allowed.' }])
       return false;
     }
     if (getDay(newRes.reservation_date) === 1) {
-      setErr(err => [...err, { message: 'Restaurant is closed on Tuesdays.' }])
+      setErr(err => [...err, { type: 'ResClosedError', message: 'Restaurant is closed on Tuesdays.' }])
       return false;
     }
     return true;
@@ -76,7 +76,7 @@ function NewReservation() {
           </form>
         </div>
       </div>
-      {err?.map((error) => <ErrorAlert error={error} />)}
+      {err?.map((error) => <ErrorAlert error={error} key={error.type} />)}
     </div>
   );
 }
