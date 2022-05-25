@@ -9,6 +9,7 @@ const valDate = (req,res,next) => {
   const checkDate = new Date(req.body.data.reservation_date);
 
   if (today > checkDate) return next({ status: 400, message: `Reservation date must be in the future.` });
+  if (checkDate.getDay() === 1) return next({ status: 400, message: `Restaurant is closed on Tuesdays.` });
 
   return next();
 }

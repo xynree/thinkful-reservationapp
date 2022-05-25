@@ -26,6 +26,13 @@ export function isAfterToday(date) {
   return today < checkDate;
 }
 
+export function getDay(date) {
+  const checkDate = new Date(date);
+  return checkDate.getDay()
+}
+
+
+
 /**
  * Format a date string in ISO-8601 format
  * (which is what is returned from PostgreSQL) as YYYY-MM-DD.
