@@ -12,6 +12,7 @@ const tables = [
     pattern:"\\w\\w",
     id: "tablenameinput",
     required: true,
+    title: "Table name must have more than 2 characters."
   }
 },
   {

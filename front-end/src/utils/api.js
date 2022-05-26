@@ -68,3 +68,13 @@ export async function saveReservation(body, signal) {
   const data = JSON.stringify({data: body})
   return await fetchJson(url, { method: "POST", body: data , headers, signal},[])
 }
+
+/**
+ * Saves new table
+ */
+ export async function saveTable(body, signal) {
+   console.log(body);
+  // const url = new URL(`${API_BASE_URL}/reservations`);
+  // const data = JSON.stringify({data: body})
+  // return await fetchJson(url, { method: "POST", body: data , headers, signal},[])
+}

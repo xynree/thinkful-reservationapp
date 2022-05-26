@@ -2,6 +2,7 @@ import FormField from "../helpers/FormField";
 import reservationFormData from "../data/ReservationFormData";
 import { saveReservation } from "../utils/api"
 import { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import ErrorAlert from "../layout/ErrorAlert";
 import { isAfterToday, getDay, isBetweenTimes } from '../utils/date-time';
 import { CLOSED_DOW, REST_HRS } from '../data/RestaurantData'
@@ -21,7 +22,8 @@ function NewReservation() {
   const [newRes, setNewRes] = useState(defaultRes)
   const [err, setErr] = useState([])
 
-
+  const history = useHistory();
+  
   const valRes = () => {
     if (!isAfterToday(newRes.reservation_date)) {
       setErr(err => [...err,{ type: 'PastDateErr',message: 'Only future reservations are allowed.' }])
