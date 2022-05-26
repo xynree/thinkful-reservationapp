@@ -32,20 +32,28 @@ export function getDay(date) {
   return checkDate.getDay()
 }
 
-/* Gets Time with Hours */
-export function isBetweenTimes(time, open, close) {
+/**
+ * Checks whether a given time is between opening and closing hours
+ * 
+ * @param date { String } 
+ * Format HH:MM
+ * @param hrs { Object } 
+ * Opening times in format {open:{hr: HH, min: MM}, close:{hr: HH, min: MM}}
+ * @returns { Boolean }
+ */
+export function isBetweenTimes(time, hrs) {
   const [hours, mins] = time.split(":")
   const currentTime = new Date();
   currentTime.setHours(hours);
   currentTime.setMinutes(mins);
 
   const startTime = new Date();
-  startTime.setHours(open.hr)
-  startTime.setMinutes(open.min)
+  startTime.setHours(hrs.open.hr)
+  startTime.setMinutes(hrs.open.min)
 
   const endTime = new Date();
-  endTime.setHours(close.hr)
-  endTime.setMinutes(close.min)
+  endTime.setHours(hrs.close.hr)
+  endTime.setMinutes(hrs.close.min)
 
   return ((currentTime > startTime) && (currentTime < endTime))
 }

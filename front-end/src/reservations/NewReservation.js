@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import ErrorAlert from "../layout/ErrorAlert";
 import { isAfterToday, getDay, isBetweenTimes } from '../utils/date-time';
-import { CLOSED_DOW, OPENTIME, CLOSEDTIME } from '../data/RestaurantData'
+import { CLOSED_DOW, REST_HRS } from '../data/RestaurantData'
 
 
 const defaultRes = {
@@ -32,8 +32,8 @@ function NewReservation() {
       return false;
     }
 
-    if (!isBetweenTimes(newRes.reservation_time, OPENTIME, CLOSEDTIME)) {
-      setErr(err => [...err, { type: 'ResHoursError', message: `Restaurant is only open for booking between ${OPENTIME.hr}:${OPENTIME.min} AM and ${CLOSEDTIME.hr-12}:${CLOSEDTIME.min} PM. `}]);
+    if (!isBetweenTimes(newRes.reservation_time, REST_HRS)) {
+      setErr(err => [...err, { type: 'ResHoursError', message: `Restaurant is only open for booking between ${REST_HRS.open.hr}:${REST_HRS.open.min} AM and ${REST_HRS.close.hr-12}:${REST_HRS.close.min} PM. `}]);
       return false;
     }
     return true;
