@@ -11,6 +11,7 @@ const reservationFormData = [
       className: "form-control",
       placeholder: "First Name",
       id: "firstnameinput",
+      required: true,
     },
   },
   {
@@ -25,6 +26,7 @@ const reservationFormData = [
       className: "form-control",
       placeholder: "Last Name",
       id: "lastnameinput",
+      required: true,
     },
   },
   {
@@ -39,6 +41,8 @@ const reservationFormData = [
       className: "form-control",
       placeholder: "### - ### - ####",
       id: "mobilenuminput",
+      required: true,
+
     },
   },
   {
@@ -54,6 +58,8 @@ const reservationFormData = [
       placeholder:"YYYY-MM-DD",
       pattern:"\\d{4}-\\d{2}-\\d{2}",
       id: "dateinput",
+      required: true,
+
     },
   },
   {
@@ -69,6 +75,8 @@ const reservationFormData = [
       placeholder:"HH:MM",
       pattern:"[0-9]{2}:[0-9]{2}",
       id: "timeinput",
+      required: true,
+
     },
   },
   {
@@ -84,6 +92,8 @@ const reservationFormData = [
       className: "form-control",
       placeholder: "Number of People in Party",
       id: "peopleinput",
+      required: true,
+
     },
   },
 ];
