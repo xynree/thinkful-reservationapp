@@ -1,11 +1,11 @@
 import FormField from "../helpers/FormField";
 import reservationFormData from "../data/ReservationFormData";
 import { saveReservation } from "../utils/api"
-import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import ErrorAlert from "../layout/ErrorAlert";
 import { isAfterToday, getDay, isBetweenTimes } from '../utils/date-time';
 import { CLOSED_DOW, REST_HRS } from '../data/RestaurantData'
+import SubmitCancel from "../helpers/SubmitCancel";
 
 
 const defaultRes = {
@@ -20,7 +20,7 @@ const defaultRes = {
 function NewReservation() {
   const [newRes, setNewRes] = useState(defaultRes)
   const [err, setErr] = useState([])
-  const history = useHistory()
+
 
   const valRes = () => {
     if (!isAfterToday(newRes.reservation_date)) {
@@ -55,7 +55,6 @@ function NewReservation() {
     else setNewRes((newRes) => ({...newRes, [e.target.name]: e.target.value}));
   }
 
-  const goBack = () => history.goBack();
 
   return (
     <div className="h-100 overflow-auto">
@@ -66,19 +65,7 @@ function NewReservation() {
             {reservationFormData.map((field) => (
               <FormField key={field.input.id} onChange={updateRes} {...field}  />
             ))}
-            <div className="d-flex">
-              <button type="submit" className="btn btn-primary m-1">
-                <span className="bi bi-send" /> Submit
-              </button>
-              <button
-                type="button"
-                className="btn btn-secondary m-1"
-                onClick={goBack}
-              >
-                <span className="bi bi-x" />
-                   Cancel
-              </button>
-            </div>
+            <SubmitCancel />
           </form>
         </div>
       </div>
