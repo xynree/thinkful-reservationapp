@@ -1,13 +1,11 @@
-const service = require("./reservations.service");
+const service = require("./tables.service");
 const asyncErr = require("../errors/asyncErrBoundary");
 
-/**
- * List handler for reservation resources
- */
 async function list(req, res, next) {
-
-  // const data = await service.read(req.query.date);
-  // return res.json({ data });
+  const data = await service.list();
+  if (!data) return next();
+  console.log('controller ran')
+  return res.json({ data });
 }
 
 async function post(req, res, next) {

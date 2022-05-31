@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { listReservations } from "../utils/api";
+import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import useQuery from "../utils/useQuery";
-import ResCard from "./ResCard";
-import NoRes from "./NoRes";
-import formatReservationTime from "../utils/format-reservation-time";
 import BtnGroup from "../helpers/BtnGroup";
 import { previous, next, today } from "../utils/date-time";
+import ResList from './ResList/ResList';
+import TableList from './TableList/TableList'
 
 /**
  * Defines the dashboard page.
@@ -14,14 +13,10 @@ import { previous, next, today } from "../utils/date-time";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-
-const formatRes = (res) =>
-  formatReservationTime(res).sort((prev, curr) =>
-    prev.reservation_time < curr.reservation_time ? -1 : 1
-  );
-
 function Dashboard({ dateToday }) {
   const [reservations, setReservations] = useState([]);
+  const [tables, setTables] = useState([]);
+  const [tablesError, setTablesError] = useState(null);
   const [reservationsError, setReservationsError] = useState(null);
   const query = useQuery().get("date");
   const [date, setDate] = useState(query ? query : dateToday);
@@ -29,9 +24,13 @@ function Dashboard({ dateToday }) {
   const loadDashboard = () => {
     const abortController = new AbortController();
     setReservationsError(null);
+    setTablesError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
-      .catch(setReservationsError);
+      .catch(setReservationsError)
+      .then(() => listTables(abortController.signal))
+      .then(setTables)
+      .catch(setTablesError)
     return () => abortController.abort();
   };
 
@@ -58,14 +57,10 @@ function Dashboard({ dateToday }) {
         <p className="mb-0">Reservations for {date}</p>
       <ErrorAlert error={reservationsError} />
       <BtnGroup buttons={buttons} />
-
-      {reservations?.length ? (
-        formatRes(reservations).map((res) => (
-          <ResCard key={res.mobile_number} res={res} />
-        ))
-      ) : (
-        <NoRes />
-      )}
+      <div className='d-flex justify-content-start gap-4 w-75'>
+        <ResList reservations={reservations}/>
+        <TableList tbls={tables} />
+      </div>
     </main>
   );
 }

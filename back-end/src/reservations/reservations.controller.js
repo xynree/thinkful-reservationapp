@@ -50,7 +50,7 @@ const valRes = (req, res, next) => {
     "reservation_time",
     "people",
   ].forEach((field) => {
-    if (!data[field])
+    if (!data[field] || data[field] === '')
       return next({ status: 400, message: `Missing field ${field}.` });
   });
 
@@ -74,6 +74,11 @@ async function list(req, res, next) {
   return res.json({ data });
 }
 
+async function match(req, res, next) {
+  const data = await service.match(Number(req.params.id));
+  return res.status(201).json({ data });
+}
+
 async function post(req, res, next) {
   const data = await service.create(req.body.data);
   return res.status(201).json({ data });
@@ -81,5 +86,6 @@ async function post(req, res, next) {
 
 module.exports = {
   list: asyncErr(list),
-  post: [valDate, valRes, asyncErr(post)],
+  match: asyncErr(match),
+  post: [valRes, valDate,  asyncErr(post)],
 };

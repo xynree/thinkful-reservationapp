@@ -1,14 +1,13 @@
 import Table from "./Table";
-import { useState } from 'react';
 
-const TableList = () => {
-  let tables = useState([])
+
+const TableList = ({tbls}) => {
   return (
-    <ul>
-      {tables?.map((tbl) => {
-        <Table />
-      })}
-    </ul>
+    <div className='w-full d-flex flex-column w-100 mt-2'>
+      {tbls?.map((tbl) => 
+        <Table tbl={tbl} key={tbl.table_id}/>
+      )}
+    </div>
   );
 }
 

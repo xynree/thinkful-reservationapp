@@ -11,7 +11,7 @@ const ResCard = ({ res }) => {
     people,
   } = res;
   return (
-    <div className="card border-secondary w-75 mb-2">
+    <div className="card border-secondary mb-2">
       <h3 className="card-header text-dark ">
         {first_name} {last_name}
       </h3>
@@ -34,8 +34,7 @@ const ResCard = ({ res }) => {
         </li>
         <li className="list-group-item">
           <Link to={`/reservations/${reservation_id}/seat`} href={`/reservations/${reservation_id}/seat`}
-           className="btn btn-primary">Reservation Date: </Link>
-          {reservation_date}
+           className="btn btn-primary">Seat</Link>
         </li>
       </ul>
     </div>
