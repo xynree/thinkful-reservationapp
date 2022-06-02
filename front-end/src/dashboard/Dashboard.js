@@ -4,8 +4,8 @@ import ErrorAlert from "../layout/ErrorAlert";
 import useQuery from "../utils/useQuery";
 import BtnGroup from "../helpers/BtnGroup";
 import { previous, next, today } from "../utils/date-time";
-import ResList from './ResList/ResList';
-import TableList from './TableList/TableList'
+import ResList from "./ResList/ResList";
+import TableList from "./TableList/TableList";
 
 /**
  * Defines the dashboard page.
@@ -21,7 +21,7 @@ function Dashboard({ dateToday }) {
   const query = useQuery().get("date");
   const [date, setDate] = useState(query ? query : dateToday);
 
-  const loadDashboard = () => {
+  useEffect(() => {
     const abortController = new AbortController();
     setReservationsError(null);
     setTablesError(null);
@@ -30,11 +30,9 @@ function Dashboard({ dateToday }) {
       .catch(setReservationsError)
       .then(() => listTables(abortController.signal))
       .then(setTables)
-      .catch(setTablesError)
+      .catch(setTablesError);
     return () => abortController.abort();
-  };
-
-  useEffect(loadDashboard, [dateToday, query, date]);
+  }, [dateToday, query, date]);
 
   const buttons = [
     {
@@ -52,15 +50,19 @@ function Dashboard({ dateToday }) {
   ];
 
   return (
-    <main className='h-100 overflow-auto p-4 '>
-      <h1 className='display-4'>Dashboard</h1>
-        <p className="mb-0">Reservations for {date}</p>
-      <ErrorAlert error={reservationsError} />
+    <main className="h-100 overflow-auto p-4 ">
+      <h1 className="display-4">Dashboard</h1>
+      <p className="mb-0">Reservations for {date}</p>
       <BtnGroup buttons={buttons} />
-      <div className='d-flex justify-content-start gap-4 w-75'>
-        <ResList reservations={reservations}/>
-        <TableList tbls={tables} />
-        <ErrorAlert error={tablesError} />
+      <div className="d-flex justify-content-start gap-4 w-75">
+        <div className="d-flex flex-column">
+          <ErrorAlert error={reservationsError} />
+        </div>
+        <ResList reservations={reservations} />
+        <div className="d-flex flex-column">
+          <ErrorAlert error={tablesError} />
+          <TableList tbls={tables} />
+        </div>
       </div>
     </main>
   );
