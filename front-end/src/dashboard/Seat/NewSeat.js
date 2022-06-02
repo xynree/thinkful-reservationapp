@@ -15,7 +15,7 @@ const NewSeat = () => {
     .then(setTables)
     .catch(console.log)
     .then(() => listReservationById(reservation_id, abortController.signal))
-    .then(data => setRes(data[0]))
+    .then(setRes)
     .catch(console.log)
   return () => abortController.abort();
 

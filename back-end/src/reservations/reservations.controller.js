@@ -75,8 +75,9 @@ async function list(req, res, next) {
 }
 
 async function match(req, res, next) {
-  const data = await service.match(Number(req.params.id));
-  return res.status(201).json({ data });
+  const data = await service.match(Number(req.params.reservation_Id));
+  if (!data) return next({ status: 400, message: `Reservation by that id not found.` })
+  return res.status(200).json({ data: data[0] });
 }
 
 async function post(req, res, next) {
