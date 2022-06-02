@@ -7,7 +7,7 @@ const read = (date) => {
 }
 
 const match = (id) => {
-  return knex(table).select("*").where({"reservation_id": id})
+  return knex(table).select("*").where({"reservation_id": id}).then(res=> res[0])
 }
 
 const create = (res) => {
