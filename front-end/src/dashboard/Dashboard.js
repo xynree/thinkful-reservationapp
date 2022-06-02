@@ -55,11 +55,11 @@ function Dashboard({ dateToday }) {
       <p className="mb-0">Reservations for {date}</p>
       <BtnGroup buttons={buttons} />
       <div className="d-flex justify-content-start gap-4 w-75">
-        <div className="d-flex flex-column">
+        <div className="d-flex flex-column justify-content-start">
           <ErrorAlert error={reservationsError} />
+          <ResList reservations={reservations} />
         </div>
-        <ResList reservations={reservations} />
-        <div className="d-flex flex-column">
+        <div className="d-flex flex-column justify-content-start">
           <ErrorAlert error={tablesError} />
           <TableList tbls={tables} />
         </div>

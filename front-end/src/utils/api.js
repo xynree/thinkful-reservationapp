@@ -90,3 +90,8 @@ export async function seatReservation(body, signal) {
   const data = JSON.stringify({data: {reservation_id: body.reservation_id}})
   return await fetchJson(url, { method: "PUT", body: data , headers, signal},[])
 }
+
+export async function deleteSeatReservation (body, signal) {
+  const url = new URL(`${API_BASE_URL}/tables/${body.table_id}/seat`);
+  return await fetchJson(url, { method: "DELETE", headers, signal},[]);
+}
