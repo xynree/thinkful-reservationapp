@@ -5,9 +5,9 @@ const Table = ({tbl, setErr}) => {
 
   const confirm = () => {
       if (window.confirm ('Is this table ready to seat new guests? This cannot be undone.')) {
-        let abort = new AbortController()
+        const abort = new AbortController()
         deleteSeatReservation(table_id, abort.signal)
-          .then(()=> window.location.reload())
+          .then(() => window.location.reload())
           .catch((err)=> setErr(err))
       }
   }

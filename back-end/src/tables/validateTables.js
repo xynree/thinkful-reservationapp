@@ -1,5 +1,6 @@
 const service = require("./tables.service");
-const { match } = require('../reservations/reservations.service');
+const { match } = require("../reservations/reservations.service");
+const asyncErr = require("../errors/asyncErrBoundary");
 
 
 /* Validates Table POST */
@@ -78,8 +79,25 @@ const valCapacity = async (req, res, next) => {
   return next();
 };
 
+const valId = async (req, res, next) => {
+  const { table_id } = req.params;
+  const table = await service.read(table_id);
+  if (!table) return next({
+    status: 404,
+    message: `${table_id} is not found.`,
+  });
+  if (!table.reservation_id)
+    return next({
+      status: 400,
+      message: `Table is not occupied.`,
+  });
+  res.locals.table_id = table_id;
+  return next();
+};
+
 module.exports = {
   valTable,
-  valCapacity,
-  valRes,
+  valCapacity: asyncErr(valCapacity),
+  valRes: asyncErr(valRes),
+  valId: asyncErr(valId),
 };
