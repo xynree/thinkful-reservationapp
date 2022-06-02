@@ -1,6 +1,6 @@
 const service = require("./tables.service");
 const asyncErr = require("../errors/asyncErrBoundary");
-const { valTable, valCapacity, valRes} = require('./validateTables');
+const { valTable, valCapacity, valRes, valId } = require('./validateTables');
 
 const list = async (req, res, next) => {
   const data = await service.list();
@@ -21,8 +21,14 @@ const put = async (req, res, next) => {
   return res.status(200).json({data})
 };
 
+const del = async (req,res,next) => {
+  await service.delSeat(res.locals.table_id)
+  return res.status(200).json({data: []});
+}
+
 module.exports = {
   list: asyncErr(list),
   post: [valTable, asyncErr(post)],
-  put: [asyncErr(valRes), asyncErr(valCapacity), asyncErr(put)],
+  put: [valRes, valCapacity, asyncErr(put)],
+  del: [valId, asyncErr(del)]
 };

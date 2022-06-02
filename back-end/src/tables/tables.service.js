@@ -20,9 +20,16 @@ const seatRes = (body) => {
   .returning("*").then(tbl => tbl[0])
 }
 
+const delSeat = (id) => {
+  return knex(table)
+  .where({table_id: id})
+  .update({reservation_id: null})
+}
+
 module.exports = {
   list,
   read, 
   create,
-  seatRes
+  seatRes,
+  delSeat
 }

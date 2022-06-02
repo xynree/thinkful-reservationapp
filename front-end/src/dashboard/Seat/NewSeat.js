@@ -65,7 +65,7 @@ const NewSeat = () => {
         >
           <option>Choose a Table</option>
           {tables?.map((table) => (
-            <option value={table.table_name}>
+            <option key={table.table_name} value={table.table_name}>
               {table.table_name} - {table.capacity}
             </option>
           ))}

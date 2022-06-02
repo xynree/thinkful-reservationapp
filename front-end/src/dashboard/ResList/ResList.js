@@ -11,7 +11,7 @@ const ResList = ({ reservations }) => {
       {reservations?.length ? (
         formatRes(reservations).map((res) => (
           <ResCardAddSeat
-            key={`${res.mobile_number}-${res.reservation_date}`}
+            key={`${res.last_name}-${res.mobile_number}-${res.reservation_date}`}
             res={res}
           />
         ))
