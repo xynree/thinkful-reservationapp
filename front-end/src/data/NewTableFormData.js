@@ -9,7 +9,7 @@ const tables = [
     name: "table_name",
     type: "text",
     className: "form-control",
-    pattern:"\\w\\w",
+    pattern:"..+",
     id: "tablenameinput",
     required: true,
     title: "Table name must have more than 2 characters."

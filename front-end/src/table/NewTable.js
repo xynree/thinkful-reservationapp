@@ -1,13 +1,13 @@
+import { useState } from 'react'
 import tables from '../data/NewTableFormData';
 import FormField from '../helpers/FormField';
-import { useState } from 'react'
+import ErrorAlert from "../layout/ErrorAlert";
 import SubmitCancel from '../helpers/SubmitCancel';
 import { saveTable } from '../utils/api';
 import { useHistory } from 'react-router-dom'; 
-import ErrorAlert from "../layout/ErrorAlert";
 
 const defTable = {
-'table-name': '',
+'table_name': '',
 'capacity': 0
 }
 const NewTable = () => {
@@ -17,10 +17,13 @@ const NewTable = () => {
 
   const updateTable = (e) => {
     if (err.length) setErr([]);
-    setTable((table) => ({...table, [e.target.name]: e.target.value}));
+    let value = e.target.value;
+    if (e.target.name === 'capacity') value = Number(value);
+    setTable((table) => ({...table, [e.target.name]: value}));
   }
   const valTable = () => {
-
+    if (!table.capacity || table.table_name === '' || table.table_name.length < 2) return false;
+    else return true;
   }
 
   const saveNewTable =(e)=> {
@@ -29,8 +32,8 @@ const NewTable = () => {
     if (!valTable()) return;
     const abort = new AbortController();
     saveTable(table, abort.signal)
-      .then((res) => history.push(`/dashboard`))
-      .catch(console.log)
+      .then(() => history.push(`/dashboard`))
+      .catch((error) => setErr([...err,error]))
   };
 
   return (
@@ -42,7 +45,7 @@ const NewTable = () => {
       ))}
       <SubmitCancel />
     </form>
-    {err?.map((error) => <ErrorAlert error={error} key={error.type} />)}
+    {err?.map((error) => <ErrorAlert error={error} key={error.message} />)}
   </div>
   );
 }

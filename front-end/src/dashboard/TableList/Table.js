@@ -1,16 +1,12 @@
 const Table = ({tbl}) => {
   const {table_id, table_name, capacity, reservation_id} = tbl;
   return (
-    <table className='card mb-2'>
-      <thead className='card-header'>Table: {table_name}</thead>
-      <tbody className='card-body'>
-
-        <p>Id: {table_id}</p>
-        <p>Capacity: {capacity}</p>
-        <p>Reserved?: {reservation_id? 'Yes': 'No'}</p>
-
-      </tbody>
-    </table>
+    <tr>
+      <td>{table_name}</td>
+      <td>{table_id}</td>
+      <td>{capacity}</td>
+      <td ><p data-table-id-status={`${table_id}`}>{reservation_id? 'occupied': 'free'}</p></td>
+    </tr>
   );
 }
 

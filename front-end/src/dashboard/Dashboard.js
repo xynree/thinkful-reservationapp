@@ -60,6 +60,7 @@ function Dashboard({ dateToday }) {
       <div className='d-flex justify-content-start gap-4 w-75'>
         <ResList reservations={reservations}/>
         <TableList tbls={tables} />
+        <ErrorAlert error={tablesError} />
       </div>
     </main>
   );
