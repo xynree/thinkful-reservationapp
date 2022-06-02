@@ -91,7 +91,7 @@ export async function seatReservation(body, signal) {
   return await fetchJson(url, { method: "PUT", body: data , headers, signal},[])
 }
 
-export async function deleteSeatReservation (body, signal) {
-  const url = new URL(`${API_BASE_URL}/tables/${body.table_id}/seat`);
+export async function deleteSeatReservation (table_id, signal) {
+  const url = new URL(`${API_BASE_URL}/tables/${table_id}/seat`);
   return await fetchJson(url, { method: "DELETE", headers, signal},[]);
 }

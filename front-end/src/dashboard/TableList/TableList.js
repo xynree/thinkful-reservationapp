@@ -1,7 +1,7 @@
 import Table from "./Table";
 
 
-const TableList = ({tbls}) => {
+const TableList = ({tbls, setErr}) => {
   return (
     <div className='w-full d-flex flex-column w-100 mt-2'>
     <table className='mb-2 table'>
@@ -24,7 +24,7 @@ const TableList = ({tbls}) => {
 
     <tbody >
     {tbls?.map((tbl) => 
-        <Table tbl={tbl} key={tbl.table_id}/>
+        <Table tbl={tbl} key={tbl.table_id} setErr={setErr}/>
       )}
 
     </tbody>

@@ -56,12 +56,12 @@ function Dashboard({ dateToday }) {
       <BtnGroup buttons={buttons} />
       <div className="d-flex justify-content-start gap-4 w-75">
         <div className="d-flex flex-column justify-content-start">
-          <ErrorAlert error={reservationsError} />
           <ResList reservations={reservations} />
+          <ErrorAlert error={reservationsError} />
         </div>
         <div className="d-flex flex-column justify-content-start">
+          <TableList tbls={tables} setErr={setTablesError} />
           <ErrorAlert error={tablesError} />
-          <TableList tbls={tables} />
         </div>
       </div>
     </main>

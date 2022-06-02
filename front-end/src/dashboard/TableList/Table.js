@@ -1,6 +1,6 @@
 import { deleteSeatReservation } from '../../utils/api';
 
-const Table = ({tbl}) => {
+const Table = ({tbl, setErr}) => {
   const {table_id, table_name, capacity, reservation_id} = tbl;
 
   const confirm = () => {
@@ -8,7 +8,7 @@ const Table = ({tbl}) => {
         let abort = new AbortController()
         deleteSeatReservation(table_id, abort.signal)
           .then(()=> window.location.reload())
-          .catch(console.log)
+          .catch((err)=> setErr(err))
       }
   }
 
