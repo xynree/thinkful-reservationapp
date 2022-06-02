@@ -4,7 +4,6 @@ const asyncErr = require("../errors/asyncErrBoundary");
 async function list(req, res, next) {
   const data = await service.list();
   if (!data) return next();
-  console.log('controller ran')
   return res.json({ data });
 }
 

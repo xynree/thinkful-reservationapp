@@ -2,7 +2,7 @@ const knex = require('../db/connection')
 const table = "tables"
 
 const list = () => {
-  return knex(table).select("*");
+  return knex(table).select("*").then(data=> data.sort((prev,curr)=> prev.table_name < curr.table_name? -1:1))
 }
 
 const read = (date) => {
