@@ -7,8 +7,9 @@ const notFound = require('../errors/notFound')
  */
 
 const router = require("express").Router();
-const {list, post} = require("./reservations.controller");
+const { list, match, post } = require("./reservations.controller");
 
 router.route("/").get(list).post(post).all(notFound);
+router.route("/:reservation_Id").get(match).all(notFound)
 
 module.exports = router;
