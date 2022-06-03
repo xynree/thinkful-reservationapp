@@ -16,6 +16,7 @@ const defaultRes = {
   "reservation_date": "",
   "reservation_time": "",
   "people": 0,
+  "status": "booked"
 }
 
 function NewReservation() {

@@ -1,4 +1,4 @@
-import { deleteSeatReservation } from '../../utils/api';
+import { deleteSeatReservation, updateBookingStatus } from '../../utils/api';
 
 const Table = ({tbl, setErr}) => {
   const {table_id, table_name, capacity, reservation_id} = tbl;
@@ -7,6 +7,7 @@ const Table = ({tbl, setErr}) => {
       if (window.confirm ('Is this table ready to seat new guests? This cannot be undone.')) {
         const abort = new AbortController()
         deleteSeatReservation(table_id, abort.signal)
+          .then(() => updateBookingStatus(reservation_id, {status: 'finished'}, abort.signal))
           .then(() => window.location.reload())
           .catch((err)=> setErr(err))
       }

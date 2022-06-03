@@ -4,6 +4,7 @@ import {
   listTables,
   listReservationById,
   seatReservation,
+  updateBookingStatus
 } from "../../utils/api";
 import ResCard from "../ResList/ResCard";
 import { useHistory, useParams } from "react-router-dom";
@@ -38,6 +39,7 @@ const NewSeat = () => {
     };
     const abort = new AbortController();
     seatReservation(body, abort.signal)
+      .then(updateBookingStatus(reservation_id, {status: "seated" }, abort.signal))
       .then(()=> history.push('/dashboard'))
       .catch(setErr);
   };

@@ -95,3 +95,9 @@ export async function deleteSeatReservation (table_id, signal) {
   const url = new URL(`${API_BASE_URL}/tables/${table_id}/seat`);
   return await fetchJson(url, { method: "DELETE", headers, signal },[]);
 }
+
+export async function updateBookingStatus(id, body, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations/:reservation_id/status`);
+  const data = JSON.stringify({data: body})
+  return await fetchJson(url, { method: "PUT", body: data , headers, signal},[])
+}

@@ -47,6 +47,7 @@ const valRes = (req, res, next) => {
     "reservation_date",
     "reservation_time",
     "people",
+    "status"
   ].forEach((field) => {
     if (!data[field] || data[field] === '')
       return next({ status: 400, message: `Missing field ${field}.` });

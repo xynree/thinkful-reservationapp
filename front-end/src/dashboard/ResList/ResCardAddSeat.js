@@ -9,6 +9,7 @@ const ResCard = ({ res }) => {
     reservation_time,
     reservation_id,
     people,
+    status
   } = res;
   return (
     <div className="card border-secondary mb-2">
@@ -33,8 +34,11 @@ const ResCard = ({ res }) => {
           {mobile_number}
         </li>
         <li className="list-group-item">
+          {status === 'booked'?
           <Link to={`/reservations/${reservation_id}/seat`} href={`/reservations/${reservation_id}/seat`}
-           className="btn btn-primary">Seat</Link>
+          className="btn btn-primary">Seat</Link>:''
+        }
+
         </li>
       </ul>
     </div>
