@@ -1,6 +1,7 @@
 const dateFormat = /\d\d\d\d-\d\d-\d\d/;
 const timeFormat = /\d\d:\d\d/;
-
+const service = require('./reservations.service')
+const asyncErr = require('../errors/asyncErrBoundary')
 const CLOSEDDOW = 1
 const REST_HRS = {open: {hr: 10, min: 30}, close: {hr: 21, min: 30}}
 
@@ -33,13 +34,16 @@ const valDate = (req,res,next) => {
   return next();
 }
 
-
-/** Validates Reservation before POST */
-const valRes = (req, res, next) => {
+const valBody = (req,res,next) => {
   const data = req.body.data;
 
   if (!data) return next({ status: 400, message: `Invalid body.` });
+  return next();
+}
 
+/** Validates Reservation before POST */
+const valFields = (req, res, next) => {
+  const data = req.body.data;
   [
     "first_name",
     "last_name",
@@ -63,6 +67,32 @@ const valRes = (req, res, next) => {
   return next();
 };
 
+const valStatus = (req,res,next) => {
+  const body = req.body.data
+  const checkedStatuses = []
+
+  if (!body.status || body.status === ''|| (body.status !== 'seated') && (body.status !== 'booked') && (body.status !== 'finished')) return next({ status: 400, message: `Invalid status ${body.status}.`
+})
+
+  if (req.method === 'POST') checkedStatuses.push('seated', 'finished')
+
+  checkedStatuses.forEach((status) => {
+    if (body.status === status)  return next({status: 400, message: `Status cannot be ${body.status}`})
+  })
+  
+  return next();
+}
+
+const valResId = async(req,res,next) => {
+  const { reservation_id } = req.params
+
+  const reserv = await service.match(reservation_id)
+  if (!reserv) return next({status: 404, message: `There is no reservation with id ${reservation_id}.` })
+  if (reserv.status === 'finished') return next({status: 400, message: 'A finished reservation cannot be updated.' })
+
+  return next();
+}
+
 module.exports = {
-  valDate, valRes
+  valResId: asyncErr(valResId), valBody, valDate, valFields, valStatus
 }

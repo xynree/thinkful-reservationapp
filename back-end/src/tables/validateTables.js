@@ -51,6 +51,11 @@ const valRes = async (req, res, next) => {
       status: 404,
       message: `${reservation_id} does not exist.`,
     });
+
+  if (reservation.status === 'seated') return next({
+    status: 400,
+    message: `Reservation is already seated.`,
+  });
   res.locals.reservation = reservation;
 
   return next();
@@ -91,9 +96,10 @@ const valId = async (req, res, next) => {
       status: 400,
       message: `Table is not occupied.`,
   });
-  res.locals.table_id = table_id;
+  res.locals.table_id = table_id
   return next();
 };
+
 
 module.exports = {
   valTable,
