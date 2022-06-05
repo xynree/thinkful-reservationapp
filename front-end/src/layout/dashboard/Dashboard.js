@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { listReservations, listTables } from "../utils/api";
-import ErrorAlert from "../layout/ErrorAlert";
-import useQuery from "../utils/useQuery";
-import BtnGroup from "../helpers/BtnGroup";
-import { previous, next, today } from "../utils/date-time";
+import { listReservations, listTables } from '../../utils/api';
+import ErrorAlert from '../ErrorAlert';
+import useQuery from '../../utils/useQuery';
+import BtnGroup from "../../helpers/BtnGroup";
+import { previous, next, today } from '../../utils/date-time';
 import ResList from "./ResList/ResList";
 import TableList from "./TableList/TableList";
 

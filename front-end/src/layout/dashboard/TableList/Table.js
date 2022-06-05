@@ -1,4 +1,4 @@
-import { deleteSeatReservation } from '../../utils/api';
+import { deleteSeatReservation } from '../../../utils/api';
 
 const Table = ({tbl, setErr}) => {
   const {table_id, table_name, capacity, reservation_id} = tbl;
