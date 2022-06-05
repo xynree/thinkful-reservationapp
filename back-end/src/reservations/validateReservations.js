@@ -104,8 +104,6 @@ const valStatus = (req, res, next) => {
 
 const valResId = async (req, res, next) => {
   const { reservation_id } = req.params;
-  
-  console.log('validation for res id run')
 
   const reserv = await service.match(Number(reservation_id));
   if (!reserv)
