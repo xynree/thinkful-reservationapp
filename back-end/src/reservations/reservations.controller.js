@@ -17,13 +17,14 @@ const match = async(req, res, next) => {
 }
 
 const post = async(req, res, next) => {
-  const data = await service.create(req.body.data);
-  if (!data) return next({ status: 400, message: `New reservation unsuccessful.` })
+  const body = {...req.body.data, status: 'booked'}
+  const data = await service.create(body);
+  if (!data) return next({ status: 400, message: `New reservation unsuccessful.` });
   return res.status(201).json({ data });
 }
 
 const changeStatus = async(req,res,next) => {
-  const data = await service.changeStatus(req.params.reservation_id,req.body.data.status)
+  const data = await service.changeStatus(Number(req.params.reservation_id),req.body.data.status)
   return res.status(200).json({data})
 }
 

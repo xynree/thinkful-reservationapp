@@ -39,7 +39,6 @@ const NewSeat = () => {
     };
     const abort = new AbortController();
     seatReservation(body, abort.signal)
-      .then(updateBookingStatus(reservation_id, {status: "seated" }, abort.signal))
       .then(()=> history.push('/dashboard'))
       .catch(setErr);
   };
