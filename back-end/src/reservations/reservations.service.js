@@ -14,8 +14,13 @@ const create = (res) => {
 return knex(table).insert(res).returning("*").then(res => res[0])
 }
 
+const changeStatus = (id, status) => {
+  return knex(table).where({reservation_id: id}).update({status}).returning("*").then(res => res[0])
+}
+
 module.exports = {
   read, 
   match,
-  create
+  create,
+  changeStatus
 }

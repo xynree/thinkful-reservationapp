@@ -29,6 +29,6 @@ const del = async (req,res,next) => {
 module.exports = {
   list: asyncErr(list),
   post: [valTable, asyncErr(post)],
-  put: [valRes, valCapacity, asyncErr(put)],
+  put: [valRes, valCapacity,asyncErr(put)],
   del: [valId, asyncErr(del)]
 };
