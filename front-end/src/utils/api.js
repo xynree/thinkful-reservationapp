@@ -62,6 +62,14 @@ export async function listReservations(params, signal) {
     .then(formatReservationTime);
 }
 
+export async function listByNum(number, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations`);
+  url.searchParams.append('mobile_number', number.toString())
+  return await fetchJson(url, { method: 'GET', headers, signal}, [])
+    .then(formatReservationDate)
+    .then(formatReservationTime);
+}
+
 export async function listReservationById(id, signal) {
   const url = new URL(`${API_BASE_URL}/reservations/${id}`);
   return await fetchJson(url, { method: 'GET', headers, signal}, [])
