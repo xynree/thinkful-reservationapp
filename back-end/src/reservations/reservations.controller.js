@@ -13,7 +13,6 @@ const list = async (req, res, next) => {
     const { mobile_number } = req.query;
 
     const data = await service.listByNum(mobile_number);
-    console.log(data)
     if (!data)
       return next({ status: 400, message: `No reservations found.` });
     return res.status(200).json({ data });

@@ -3,12 +3,15 @@ import ResList from "../Dashboard/ResList/ResList";
 import { useState } from "react";
 import SearchForm from "../../data/SearchReservation";
 import { listByNum } from '../../utils/api'
+import NoRes from '../Dashboard/ResList/NoRes'
+import { useHistory } from 'react-router-dom'
 import ErrorAlert from '../ErrorAlert'
 
 const Search = () => {
   const [searchVal, setSearchVal] = useState("");
-  const [fetchedRes, setFetchedRes] = useState([]);
+  const [fetchedRes, setFetchedRes] = useState(null);
   const [err, setErr] = useState(null)
+  const history = useHistory();
 
   const searchRes = (e) => {
     e.preventDefault();
@@ -17,14 +20,17 @@ const Search = () => {
     if (!searchVal) return;
     listByNum(searchVal, abort.signal)
     .then(setFetchedRes)
+    .then(history.push({search: `?mobile_number=${searchVal}`}))
     .then(setSearchVal(''))
     .catch(setErr)
   };
 
   const setSearch = (e) => {
     if (err) setErr(null);
+    if (fetchedRes === []) setFetchedRes(null)
     const phone = e.target.value;
-    if ((phone.length === 3 || phone.length === 7) && searchVal.length < phone.length ) {
+    if (phone.slice(-1) === '-') return;
+    if ((phone.length === 3 || phone.length === 7) && (searchVal.length < phone.length)) {
         setSearchVal(phone.concat("-"));
     } else setSearchVal(phone);
   };
@@ -38,7 +44,7 @@ const Search = () => {
           Find
         </button>
       </form>
-      {fetchedRes.length ? <ResList reservations={fetchedRes} /> : ""}
+      { fetchedRes? fetchedRes.length ? <ResList reservations={fetchedRes} /> : <div className='mt-4'><NoRes /></div>: ''}
       <ErrorAlert error={err} />
     </div>
   );
