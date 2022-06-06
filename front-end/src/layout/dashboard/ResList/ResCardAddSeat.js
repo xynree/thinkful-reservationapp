@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const ResCard = ({ res }) => {
+const ResCardAddSeat = ({ res }) => {
   const {
     first_name,
     last_name,
@@ -48,4 +48,4 @@ const ResCard = ({ res }) => {
   );
 };
 
-export default ResCard;
+export default ResCardAddSeat;

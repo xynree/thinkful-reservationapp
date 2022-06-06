@@ -1,6 +1,6 @@
 import ResCardAddSeat from "./ResCardAddSeat";
 import NoRes from "./NoRes";
-import formatReservationTime from "../../utils/format-reservation-time";
+import formatReservationTime from '../../../utils/format-reservation-time'
 
 const ResList = ({ reservations }) => {
   const formatRes = (res) =>

@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import tables from '../data/NewTableFormData';
-import FormField from '../helpers/FormField';
-import ErrorAlert from "../layout/ErrorAlert";
-import SubmitCancel from '../helpers/SubmitCancel';
-import { saveTable } from '../utils/api';
+import tables from '../../data/NewTableFormData';
+import FormField from '../../helpers/FormField';
+import ErrorAlert from "../ErrorAlert";
+import SubmitCancel from '../../helpers/SubmitCancel';
+import { saveTable } from '../../utils/api';
 import { useHistory } from 'react-router-dom'; 
 
 const defTable = {

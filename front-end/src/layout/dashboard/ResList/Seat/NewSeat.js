@@ -1,13 +1,13 @@
-import SubmitCancel from "../../helpers/SubmitCancel";
+import SubmitCancel from '../../../../helpers/SubmitCancel';
 import { useState, useEffect } from "react";
 import {
   listTables,
   listReservationById,
   seatReservation,
-} from "../../utils/api";
-import ResCard from "../ResList/ResCard";
+} from '../../../../utils/api'
+import ResCard from '../ResCard'
 import { useHistory, useParams } from "react-router-dom";
-import ErrorAlert from "../../layout/ErrorAlert";
+import ErrorAlert from '../../../ErrorAlert'
 
 const NewSeat = () => {
   const [tables, setTables] = useState([]);
