@@ -3,7 +3,7 @@ import reservationFormData from "../../data/ReservationFormData";
 import { saveReservation } from "../../utils/api"
 import { useState } from "react";
 import { useHistory } from 'react-router-dom';
-import ErrorAlert from "../../layout/ErrorAlert";
+import ErrorAlert from "../ErrorAlert";
 import { isAfterToday, getDay, isBetweenTimes } from '../../utils/date-time';
 import { CLOSED_DOW, REST_HRS } from '../../data/RestaurantData'
 import SubmitCancel from '../../helpers/SubmitCancel';
