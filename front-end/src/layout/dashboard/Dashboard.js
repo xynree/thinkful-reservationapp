@@ -6,6 +6,7 @@ import BtnGroup from "../../helpers/BtnGroup";
 import { previous, next, today } from '../../utils/date-time';
 import ResList from "./ResList/ResList";
 import TableList from "./TableList/TableList";
+import {useHistory } from 'react-router-dom'
 
 /**
  * Defines the dashboard page.
@@ -20,6 +21,7 @@ function Dashboard({ dateToday }) {
   const [reservationsError, setReservationsError] = useState(null);
   const query = useQuery().get("date");
   const [date, setDate] = useState(query ? query : dateToday);
+  const history = useHistory();
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -27,12 +29,14 @@ function Dashboard({ dateToday }) {
     setTablesError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
+      .then(history.push({search: `?date=${date}`})
+      )
       .catch(setReservationsError)
       .then(() => listTables(abortController.signal))
       .then(setTables)
       .catch(setTablesError);
     return () => abortController.abort();
-  }, [dateToday, query, date]);
+  }, [dateToday, query, date, history]);
 
   const buttons = [
     {
