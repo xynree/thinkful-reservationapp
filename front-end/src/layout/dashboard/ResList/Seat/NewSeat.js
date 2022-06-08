@@ -5,7 +5,7 @@ import {
   listReservationById,
   seatReservation,
 } from '../../../../utils/api'
-import ResCard from '../ResCard'
+import ResCard from './ResCard'
 import { useHistory, useParams } from "react-router-dom";
 import ErrorAlert from '../../../ErrorAlert'
 

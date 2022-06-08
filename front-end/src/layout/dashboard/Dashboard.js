@@ -15,61 +15,61 @@ import {useHistory } from 'react-router-dom'
  * @returns {JSX.Element}
  */
 function Dashboard({ dateToday }) {
-  const [reservations, setReservations] = useState([]);
-  const [tables, setTables] = useState([]);
-  const [tablesError, setTablesError] = useState(null);
-  const [reservationsError, setReservationsError] = useState(null);
-  const query = useQuery().get("date");
-  const [date, setDate] = useState(query ? query : dateToday);
-  const history = useHistory();
+	const [reservations, setReservations] = useState([]);
+	const [tables, setTables] = useState([]);
+	const [tablesError, setTablesError] = useState(null);
+	const [reservationsError, setReservationsError] = useState(null);
+	const query = useQuery().get("date");
+	const [date, setDate] = useState(query ? query : dateToday);
+	const history = useHistory();
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    setReservationsError(null);
-    setTablesError(null);
-    listReservations({ date }, abortController.signal)
-      .then(setReservations)
-      .then(history.push({search: `?date=${date}`})
-      )
-      .catch(setReservationsError)
-      .then(() => listTables(abortController.signal))
-      .then(setTables)
-      .catch(setTablesError);
-    return () => abortController.abort();
-  }, [dateToday, query, date, history]);
+	useEffect(() => {
+		const abortController = new AbortController();
+		setReservationsError(null);
+		setTablesError(null);
+		listReservations({ date }, abortController.signal)
+			.then(setReservations)
+			.then(history.push({search: `?date=${date}`})
+			)
+			.catch(setReservationsError)
+			.then(() => listTables(abortController.signal))
+			.then(setTables)
+			.catch(setTablesError);
+		return () => abortController.abort();
+	}, [dateToday, query, date, history]);
 
-  const buttons = [
-    {
-      title: "Previous",
-      action: () => setDate((date) => previous(date)),
-    },
-    {
-      title: "Today",
-      action: () => setDate(today()),
-    },
-    {
-      title: "Next",
-      action: () => setDate((date) => next(date)),
-    },
-  ];
+	const buttons = [
+		{
+			title: "Previous",
+			action: () => setDate((date) => previous(date)),
+		},
+		{
+			title: "Today",
+			action: () => setDate(today()),
+		},
+		{
+			title: "Next",
+			action: () => setDate((date) => next(date)),
+		},
+	];
 
-  return (
-    <main className="h-100 overflow-auto p-4 ">
-      <h1 className="display-4">Dashboard</h1>
-      <p className="mb-0">Reservations for {date}</p>
-      <BtnGroup buttons={buttons} />
-      <div className="d-flex justify-content-start gap-4 w-75">
-        <div className="d-flex flex-column justify-content-start">
-          <ResList reservations={reservations} />
-          <ErrorAlert error={reservationsError} />
-        </div>
-        <div className="d-flex flex-column justify-content-start">
-          <TableList tbls={tables} setErr={setTablesError} />
-          <ErrorAlert error={tablesError} />
-        </div>
-      </div>
-    </main>
-  );
+	return (
+		<main className="h-100 overflow-auto p-4 ">
+			<h1 className="display-4">Dashboard</h1>
+			<p className="mb-0">Reservations for {date}</p>
+			<BtnGroup buttons={buttons} />
+			<div className="d-flex justify-content-start gap-4 w-75">
+				<div className="d-flex flex-column justify-content-start">
+					<ResList reservations={reservations} />
+					<ErrorAlert error={reservationsError} />
+				</div>
+				<div className="d-flex flex-column justify-content-start">
+					<TableList tbls={tables} setErr={setTablesError} />
+					<ErrorAlert error={tablesError} />
+				</div>
+			</div>
+		</main>
+	);
 }
 
 export default Dashboard;

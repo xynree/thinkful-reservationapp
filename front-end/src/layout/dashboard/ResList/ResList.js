@@ -1,4 +1,4 @@
-import ResCardAddSeat from "./ResCardAddSeat";
+import ResCardFull from "./ResCardFull";
 import NoRes from "./NoRes";
 import formatReservationTime from '../../../utils/format-reservation-time'
 
@@ -13,7 +13,7 @@ const ResList = ({ reservations }) => {
       {reservations?.length ? (
         formatRes(reservations).map((res) => 
           res.status !== "finished" ?
-              <ResCardAddSeat
+              <ResCardFull
                 key={`${res.last_name}-${res.mobile_number}-${res.reservation_date}`}
                 res={res}
               /> :''
