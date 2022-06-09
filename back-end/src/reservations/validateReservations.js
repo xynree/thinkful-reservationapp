@@ -81,20 +81,21 @@ const valFields = (req, res, next) => {
 
 const valStatus = (req, res, next) => {
   let body = req.body.data;
-  const checkedStatuses = [];
+  const invalidStatuses = [];
 
   if (!body.status) body = { ...req.body.data, status: "booked" };
 
   if (
     body.status !== "seated" &&
     body.status !== "booked" &&
-    body.status !== "finished"
+    body.status !== "finished" &&
+    body.status !== "cancelled"
   )
     return next({ status: 400, message: `Invalid status ${body.status}.` });
 
-  if (req.method === "POST") checkedStatuses.push("seated", "finished");
+  if (req.method === "POST") invalidStatuses.push("seated", "finished");
 
-  checkedStatuses.forEach((status) => {
+  invalidStatuses.forEach((status) => {
     if (body.status === status)
       return next({ status: 400, message: `Status cannot be ${body.status}` });
   });

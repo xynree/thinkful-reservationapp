@@ -43,10 +43,19 @@ const changeStatus = (id, status) => {
     .then((res) => res[0]);
 };
 
+const update = (res) => {
+  return knex(table)
+  .where({reservation_id: res.reservation_id})
+  .update(res)
+  .returning("*")
+  .then((res)=> res[0])
+}
+
 module.exports = {
   read,
   match,
   create,
+  update,
   listByNum,
   changeStatus,
 };

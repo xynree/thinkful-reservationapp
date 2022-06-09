@@ -68,6 +68,7 @@ const ResCardFull = ({ res }) => {
           <button
             onClick={cancelPrompt}
             className="btn btn-danger"
+            data-reservation-id-cancel={reservation_id}
           >
             Cancel
           </button>
