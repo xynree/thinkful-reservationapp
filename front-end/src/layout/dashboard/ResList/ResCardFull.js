@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { cancelReservation }from '../../../utils/api'
 
-const ResCardFull = ({ res }) => {
+const ResCardFull = ({ res, setReservations, query }) => {
+  const history = useHistory();
+
   const {
     first_name,
     last_name,
@@ -11,12 +14,16 @@ const ResCardFull = ({ res }) => {
     people,
     status,
   } = res;
+  console.log(query)
 
   const cancelPrompt = () => {
     if (window.confirm('Do you want to cancel this reservation? This cannot be undone.')) {
-      console.log('confirmed')
+      const abort = new AbortController();
+      cancelReservation(reservation_id, abort.signal)
+      .then(res => setReservations(reserv => reserv.filter(({reservation_id}) => reservation_id !== res.reservation_id)))
+      .then(() => history.push(`/reservations/?date=${query}`))
+      .catch(console.log)
     }
-
   }
 
   return (
@@ -67,6 +74,7 @@ const ResCardFull = ({ res }) => {
           </Link>
           <button
             onClick={cancelPrompt}
+            type='button'
             className="btn btn-danger"
             data-reservation-id-cancel={reservation_id}
           >

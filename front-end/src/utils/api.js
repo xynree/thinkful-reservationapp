@@ -75,6 +75,12 @@ export async function listReservationById(id, signal) {
   return await fetchJson(url, { method: 'GET', headers, signal}, [])
 }
 
+export async function cancelReservation(id,signal) {
+  const url = new URL(`${API_BASE_URL}/reservations/${id}/status`);
+  const data = JSON.stringify({data: { status: "cancelled" }})
+  return await fetchJson(url, { method: 'PUT', body: data,  headers, signal}, [])
+}
+
 export async function listTables(signal) {
   const url = new URL(`${API_BASE_URL}/tables`);
   return await fetchJson(url, { method: 'GET', headers, signal}, [])
@@ -84,6 +90,12 @@ export async function saveReservation(body, signal) {
   const url = new URL(`${API_BASE_URL}/reservations`);
   const data = JSON.stringify({data: body})
   return await fetchJson(url, { method: "POST", body: data , headers, signal},[])
+}
+
+export async function updateReservation(body, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations/${body.reservation_id}`);
+  const data = JSON.stringify({data: body})
+  return await fetchJson(url, { method: "PUT", body: data , headers, signal},[])
 }
 
 /** Saves new table */

@@ -6,6 +6,7 @@ const ResCard = ({res}) => {
     reservation_date,
     reservation_time,
     people,
+    status
   } = res;
   return (
     <div className="card border-secondary mb-2">
@@ -28,6 +29,10 @@ const ResCard = ({res}) => {
         <li className="list-group-item">
           <span className="fw-semibold">Contact Number: </span>
           {mobile_number}
+        </li>
+        <li className="list-group-item">
+          <span className="fw-semibold">Status: </span>
+          {status}
         </li>
       </ul>
     </div>

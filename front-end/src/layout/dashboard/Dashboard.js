@@ -23,20 +23,25 @@ function Dashboard({ dateToday }) {
 	const [date, setDate] = useState(query ? query : dateToday);
 	const history = useHistory();
 
-	useEffect(() => {
+	const loadDashboard = () => {
 		const abortController = new AbortController();
 		setReservationsError(null);
 		setTablesError(null);
 		listReservations({ date }, abortController.signal)
+			.then(  res => res.filter(
+				({ status }) => status !== "finished" && status !== "cancelled"
+			))
 			.then(setReservations)
 			.then(history.push({search: `?date=${date}`})
 			)
 			.catch(setReservationsError)
-			.then(() => listTables(abortController.signal))
+			listTables(abortController.signal)
 			.then(setTables)
 			.catch(setTablesError);
 		return () => abortController.abort();
-	}, [dateToday, query, date, history]);
+	}
+
+	useEffect(loadDashboard, [dateToday, query, date, history]);
 
 	const buttons = [
 		{
@@ -53,6 +58,7 @@ function Dashboard({ dateToday }) {
 		},
 	];
 
+
 	return (
 		<main className="h-100 overflow-auto p-4 ">
 			<h1 className="display-4">Dashboard</h1>
@@ -60,7 +66,7 @@ function Dashboard({ dateToday }) {
 			<BtnGroup buttons={buttons} />
 			<div className="d-flex justify-content-start gap-4 w-75">
 				<div className="d-flex flex-column justify-content-start">
-					<ResList reservations={reservations} />
+					<ResList reservations={reservations} setReservations={setReservations} query={query}/>
 					<ErrorAlert error={reservationsError} />
 				</div>
 				<div className="d-flex flex-column justify-content-start">
