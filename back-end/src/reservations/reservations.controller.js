@@ -13,8 +13,7 @@ const list = async (req, res, next) => {
     const { mobile_number } = req.query;
 
     const data = await service.listByNum(mobile_number);
-    if (!data)
-      return next({ status: 400, message: `No reservations found.` });
+    if (!data) return next({ status: 400, message: `No reservations found.` });
     return res.status(200).json({ data });
   }
 
@@ -28,7 +27,10 @@ const list = async (req, res, next) => {
 const match = async (req, res, next) => {
   const data = await service.match(Number(req.params.reservation_id));
   if (!data)
-    return next({ status: 400, message: `Reservation by that id not found.` });
+    return next({
+      status: 404,
+      message: `Reservation by that id ${req.params.reservation_id} not found.`,
+    });
   return res.status(200).json({ data });
 };
 
@@ -48,8 +50,16 @@ const changeStatus = async (req, res, next) => {
   return res.status(200).json({ data });
 };
 
+const update = async (req, res, next) => {
+  const data = await service.update(req.body.data)
+
+  return res.status(200).json({data})
+
+};
+
 module.exports = {
   list: asyncErr(list),
+  update: [valBody, valFields, valResId, asyncErr(update)],
   match: asyncErr(match),
   post: [valBody, valFields, valStatus, valDate, asyncErr(post)],
   changeStatus: [valBody, valStatus, valResId, asyncErr(changeStatus)],

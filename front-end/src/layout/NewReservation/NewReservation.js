@@ -4,10 +4,8 @@ import { saveReservation } from "../../utils/api"
 import { useState } from "react";
 import { useHistory } from 'react-router-dom';
 import ErrorAlert from "../ErrorAlert";
-import { isAfterToday, getDay, isBetweenTimes } from '../../utils/date-time';
-import { CLOSED_DOW, REST_HRS } from '../../data/RestaurantData'
+import valRes from '../../utils/validateRes';
 import SubmitCancel from '../../helpers/SubmitCancel';
-
 
 const defaultRes = {
   "first_name": "",
@@ -22,30 +20,12 @@ const defaultRes = {
 function NewReservation() {
   const [newRes, setNewRes] = useState(defaultRes)
   const [err, setErr] = useState([])
-
   const history = useHistory();
-  
-  const valRes = () => {
-    if (!isAfterToday(newRes.reservation_date)) {
-      setErr(err => [...err,{ type: 'PastDateErr',message: 'Only future reservations are allowed.' }])
-      return false;
-    }
-    if (getDay(newRes.reservation_date) === CLOSED_DOW) {
-      setErr(err => [...err, { type: 'ResClosedError', message: 'Restaurant is closed on Tuesdays.' }])
-      return false;
-    }
-
-    if (!isBetweenTimes(newRes.reservation_time, REST_HRS)) {
-      setErr(err => [...err, { type: 'ResHoursError', message: `Restaurant is only open for booking between ${REST_HRS.open.hr}:${REST_HRS.open.min} AM and ${REST_HRS.close.hr-12}:${REST_HRS.close.min} PM. `}]);
-      return false;
-    }
-    return true;
-  }
 
   const saveNewRes =(e)=> {
     e.preventDefault();
 
-    if (!valRes()) return;
+    if (!valRes(newRes, setErr)) return;
     const abort = new AbortController();
     saveReservation(newRes, abort.signal)
       .then((res) => history.push(`/dashboard?date=${res.reservation_date}`))
@@ -58,7 +38,6 @@ function NewReservation() {
     else setNewRes((newRes) => ({...newRes, [e.target.name]: e.target.value}));
   }
 
-
   return (
     <div className="h-100 overflow-auto">
       <div className="card w-75 m-4 ">
@@ -66,7 +45,7 @@ function NewReservation() {
           <h1 className="card-title display-3">New Reservation</h1>
           <form onSubmit={saveNewRes}>
             {reservationFormData.map((field) => (
-              <FormField key={field.input.id} onChange={updateRes} {...field}  />
+              <FormField key={field.input.id} onChange={updateRes} {...field} inputVal={newRes[field.input.name]}  />
             ))}
             <SubmitCancel />
           </form>

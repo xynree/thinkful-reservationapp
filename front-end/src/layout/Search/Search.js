@@ -39,7 +39,7 @@ const Search = () => {
     <div className="h-100 overflow-auto p-4">
       <h1 className="display-4">Search For A Reservation</h1>
       <form onSubmit={searchRes}>
-        <FormField {...SearchForm(searchVal)} onChange={setSearch} />
+        <FormField {...SearchForm(searchVal)} onChange={setSearch} inputVal={searchVal}/>
         <button className="btn btn-primary" type="submit">
           Find
         </button>

@@ -1,13 +1,10 @@
-import { Link } from 'react-router-dom';
-
-const ResCardAddSeat = ({ res }) => {
+const ResCard = ({res}) => {
   const {
     first_name,
     last_name,
     mobile_number,
     reservation_date,
     reservation_time,
-    reservation_id,
     people,
     status
   } = res;
@@ -35,17 +32,11 @@ const ResCardAddSeat = ({ res }) => {
         </li>
         <li className="list-group-item">
           <span className="fw-semibold">Status: </span>
-          <span data-reservation-id-status={reservation_id}>{status}</span></li>
-        <li className="list-group-item">
-          {status === 'booked'?
-          <Link to={`/reservations/${reservation_id}/seat`} href={`/reservations/${reservation_id}/seat`}
-          className="btn btn-primary">Seat</Link>:''
-        }
-
+          {status}
         </li>
       </ul>
     </div>
   );
-};
+}
 
-export default ResCardAddSeat;
+export default ResCard;

@@ -1,4 +1,4 @@
-function FormField({ title, label, input, onChange }) {
+function FormField({ title, label, input, onChange, inputVal }) {
   const { name, htmlFor } = label;
   return (
     <div className="mb-3">
@@ -10,6 +10,7 @@ function FormField({ title, label, input, onChange }) {
       </label>
       <input
         {...input}
+        value={inputVal}
         onChange={onChange}
       />
     </div>
