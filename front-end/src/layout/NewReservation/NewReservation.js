@@ -40,7 +40,7 @@ function NewReservation() {
 
   return (
     <div className="h-100 overflow-auto m-auto">
-      <div className="card w-75 m-4">
+      <div className="card m-4">
       <h1 className="card-header display-3">New Reservation</h1>
         <div className="card-body d-flex flex-column">
           <form onSubmit={saveNewRes}>

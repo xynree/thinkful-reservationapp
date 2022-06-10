@@ -28,7 +28,8 @@ const Search = () => {
     if (err) setErr([]);
     if (fetchedRes === []) setFetchedRes(null);
     const phone = e.target.value;
-    if (phone.slice(-1) === "-") return;
+    if (phone.slice(-1) === "-"  && searchVal.length < phone.length
+    ) return;
     if (
       (phone.length === 3 || phone.length === 7) &&
       searchVal.length < phone.length
@@ -38,7 +39,7 @@ const Search = () => {
   };
 
   return (
-    <div className="w-75 card overflow-auto m-4">
+    <div className="card overflow-auto m-4">
       <h1 className="display-4 card-header">Search For A Reservation</h1>
       <div className="card-body">
         <form onSubmit={searchRes}>
