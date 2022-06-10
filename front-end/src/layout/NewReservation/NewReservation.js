@@ -29,7 +29,7 @@ function NewReservation() {
     const abort = new AbortController();
     saveReservation(newRes, abort.signal)
       .then((res) => history.push(`/dashboard?date=${res.reservation_date}`))
-      .catch(console.log)
+      .catch((err) => setErr(error => [...error, err]))
   };
 
   const updateRes = (e) => {
