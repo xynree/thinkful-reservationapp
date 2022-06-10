@@ -29,7 +29,7 @@ function NewReservation() {
     const abort = new AbortController();
     saveReservation(newRes, abort.signal)
       .then((res) => history.push(`/dashboard?date=${res.reservation_date}`))
-      .catch(console.log)
+      .catch((err) => setErr(error => [...error, err]))
   };
 
   const updateRes = (e) => {
@@ -39,10 +39,10 @@ function NewReservation() {
   }
 
   return (
-    <div className="h-100 overflow-auto">
-      <div className="card w-75 m-4 ">
+    <div className="h-100 overflow-auto m-auto">
+      <div className="card m-4">
+      <h1 className="card-header display-3">New Reservation</h1>
         <div className="card-body d-flex flex-column">
-          <h1 className="card-title display-3">New Reservation</h1>
           <form onSubmit={saveNewRes}>
             {reservationFormData.map((field) => (
               <FormField key={field.input.id} onChange={updateRes} {...field} inputVal={newRes[field.input.name]}  />

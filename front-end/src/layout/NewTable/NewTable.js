@@ -37,8 +37,9 @@ const NewTable = () => {
   };
 
   return (
-    <div className='h-100 overflow-auto p-4'>
-      <h1 className='display-4'>New Table</h1>
+    <div className='card overflow-auto m-4 w-75 flex-column d-flex '>
+      <h1 className='display-3 card-header'>New Table</h1>
+      <div className='card-body'>
       <form onSubmit={saveNewTable}>
       {tables.map((field) => (
         <FormField key={field.input.id} onChange={updateTable} {...field}  />
@@ -46,6 +47,7 @@ const NewTable = () => {
       <SubmitCancel />
     </form>
     {err?.map((error) => <ErrorAlert error={error} key={error.message} />)}
+    </div>
   </div>
   );
 }
