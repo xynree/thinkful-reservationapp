@@ -18,10 +18,16 @@ const ResCardFull = ({ res, setReservations, query, setErr }) => {
   const cancelPrompt = () => {
     if (window.confirm('Do you want to cancel this reservation? This cannot be undone.')) {
       const abort = new AbortController();
-      cancelReservation(reservation_id, abort.signal)
-      .then(res => setReservations(reserv => reserv.filter(({reservation_id}) => reservation_id !== res.reservation_id)))
-      .then(() => history.push(`/reservations/?date=${query}`))
-      .catch(setErr)
+      if (setReservations) {
+        cancelReservation(reservation_id, abort.signal)
+        .then(res => setReservations(reserv => reserv.filter(({reservation_id}) => reservation_id !== res.reservation_id)))
+        .then(() => history.push(`/reservations/?date=${query}`))
+        .catch(setErr)
+      } else {
+        cancelReservation(reservation_id, abort.signal)
+        .then(() => window.location.reload())
+        .catch(setErr)
+      }
     }
   }
 
@@ -64,6 +70,9 @@ const ResCardFull = ({ res, setReservations, query, setErr }) => {
             ""
           )}
 
+          {status === 'cancelled' || status ==='finished' ? ''
+          :
+          <>
           <Link
             to={`/reservations/${reservation_id}/edit`}
             href={`/reservations/${reservation_id}/edit`}
@@ -79,6 +88,8 @@ const ResCardFull = ({ res, setReservations, query, setErr }) => {
           >
             Cancel
           </button>
+          </>
+          }
         </li>
       </ul>
     </div>

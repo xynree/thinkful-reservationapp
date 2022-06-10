@@ -58,10 +58,10 @@ function Dashboard({ dateToday }) {
   ];
 
   return (
-    <main className="h-100 overflow-auto p-4 ">
-      <h1 className="display-4 text-center">Dashboard</h1>
-      <hr />
-      <div className="d-flex w-100 justify-content-around">
+    <main className="h-100 overflow-auto p-4">
+      <div className='card h-100'>
+      <h1 className="display-4 text-center card-header">Dashboard</h1>
+      <div className="d-flex w-100 justify-content-around card-body overflow-auto">
         <div className="d-flex flex-column mt-2 gap-2">
           <h2 className="mb-0">Reservations for {date}</h2>
           <BtnGroup buttons={buttons} />
@@ -76,6 +76,7 @@ function Dashboard({ dateToday }) {
           <TableList tbls={tables} setErr={setTablesError} />
           <ErrorAlert error={tablesError} />
         </div>
+      </div>
       </div>
     </main>
   );
