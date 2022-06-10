@@ -10,23 +10,22 @@ import ErrorAlert from '../ErrorAlert'
 const Search = () => {
   const [searchVal, setSearchVal] = useState("");
   const [fetchedRes, setFetchedRes] = useState(null);
-  const [err, setErr] = useState(null)
+  const [err, setErr] = useState([])
   const history = useHistory();
 
   const searchRes = (e) => {
     e.preventDefault();
-    console.log('find run')
     const abort = new AbortController();
     if (!searchVal) return;
     listByNum(searchVal, abort.signal)
     .then(setFetchedRes)
     .then(history.push({search: `?mobile_number=${searchVal}`}))
     .then(setSearchVal(''))
-    .catch(setErr)
+    .catch((error)=> setErr(err => [...err, error]))
   };
 
   const setSearch = (e) => {
-    if (err) setErr(null);
+    if (err) setErr([]);
     if (fetchedRes === []) setFetchedRes(null)
     const phone = e.target.value;
     if (phone.slice(-1) === '-') return;
@@ -45,7 +44,7 @@ const Search = () => {
         </button>
       </form>
       { fetchedRes? fetchedRes.length ? <ResList reservations={fetchedRes} /> : <div className='mt-4'><NoRes /></div>: ''}
-      <ErrorAlert error={err} />
+      {err?.map((error) => <ErrorAlert error={error} key={error.message} />)}
     </div>
   );
 };

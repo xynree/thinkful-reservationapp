@@ -1,8 +1,11 @@
 import ResCardFull from "./ResCardFull";
 import NoRes from "./NoRes";
+import { useState } from 'react';
 import formatReservationTime from "../../../utils/format-reservation-time";
+import ErrorAlert from "../../ErrorAlert";
 
 const ResList = ({ reservations, setReservations, query }) => {
+  const [err, setErr] = useState(null)
   const formatRes = (res) =>
     formatReservationTime(res).sort((prev, curr) =>
       prev.reservation_time < curr.reservation_time ? -1 : 1
@@ -17,11 +20,13 @@ const ResList = ({ reservations, setReservations, query }) => {
             res={res}
             setReservations={setReservations}
             query={query}
+            setErr={setErr}
           />
         ))
       ) : (
         <NoRes />
       )}
+      <ErrorAlert error={err}/>
     </div>
   );
 };

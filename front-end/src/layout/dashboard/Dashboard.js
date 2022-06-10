@@ -62,7 +62,7 @@ function Dashboard({ dateToday }) {
       <h1 className="display-4 text-center">Dashboard</h1>
       <hr />
       <div className="d-flex w-100 justify-content-around">
-        <div className="d-flex flex-column">
+        <div className="d-flex flex-column mt-2 gap-2">
           <h2 className="mb-0">Reservations for {date}</h2>
           <BtnGroup buttons={buttons} />
           <ResList

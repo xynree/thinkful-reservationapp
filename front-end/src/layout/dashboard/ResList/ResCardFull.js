@@ -1,7 +1,7 @@
 import { Link, useHistory } from "react-router-dom";
 import { cancelReservation }from '../../../utils/api'
 
-const ResCardFull = ({ res, setReservations, query }) => {
+const ResCardFull = ({ res, setReservations, query, setErr }) => {
   const history = useHistory();
 
   const {
@@ -14,7 +14,6 @@ const ResCardFull = ({ res, setReservations, query }) => {
     people,
     status,
   } = res;
-  console.log(query)
 
   const cancelPrompt = () => {
     if (window.confirm('Do you want to cancel this reservation? This cannot be undone.')) {
@@ -22,7 +21,7 @@ const ResCardFull = ({ res, setReservations, query }) => {
       cancelReservation(reservation_id, abort.signal)
       .then(res => setReservations(reserv => reserv.filter(({reservation_id}) => reservation_id !== res.reservation_id)))
       .then(() => history.push(`/reservations/?date=${query}`))
-      .catch(console.log)
+      .catch(setErr)
     }
   }
 
