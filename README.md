@@ -1,6 +1,6 @@
 # Thinkful Capstone: Restaurant Reservation System
 
-A full stack web application created as the final capstone for Thinkful's Full Stack Engineering Flex bootcamp program. This project connects to a database to implement the CRUD API for setting up reservations. View the deployed project [here](thinkful-reservationapp.vercel.app).
+A full stack web application created as the final capstone for Thinkful's Full Stack Engineering Flex bootcamp program. This project connects to a database to implement the CRUD API for setting up reservations. View the deployed project [here](https://thinkful-reservationapp.vercel.app/dashboard/?date=2022-06-15).
 
 ## Usage
 ```bash
